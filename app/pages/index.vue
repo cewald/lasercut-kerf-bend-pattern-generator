@@ -1,5 +1,5 @@
 <template>
   <TresCanvas clear-color="#82DBC5" window-size>
-    <FirstExperience />
+    <Scene />
   </TresCanvas>
 </template>

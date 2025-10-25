@@ -3,7 +3,7 @@ const { width, height } = useWindowSize()
 
 const frustum = computed(() => {
   const aspect = width.value / height.value
-  const size = 10
+  const size = 5
   return {
     left: (-size * aspect) / 2,
     right: (size * aspect) / 2,
