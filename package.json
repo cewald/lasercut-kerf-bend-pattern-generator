@@ -18,12 +18,14 @@
     "@vueuse/nuxt": "^14.0.0",
     "nuxt": "^4.2.0",
     "three": "^0.180.0",
+    "tweakpane": "^4.0.5",
     "typescript": "^5.9.3",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@cewald/eslint-config": "^2.3.3",
+    "@tweakpane/core": "^2.0.5",
     "@types/three": "^0.180.0",
     "eslint": "^9.38.0",
     "husky": "^9.1.7",
