@@ -11,6 +11,16 @@ const frustum = computed(() => {
     bottom: -size / 2,
   }
 })
+
+const linePoints = computed(() => {
+  const size = Math.min(width.value, height.value) * 0.005
+  const halfSize = size * 0.9 // Use 80% of frustum width
+
+  return [
+    [-halfSize, 0, 0],
+    [halfSize, 0, 0],
+  ]
+})
 </script>
 
 <template>
@@ -20,12 +30,15 @@ const frustum = computed(() => {
       v-bind="frustum"
     />
 
-    <TresMesh :position="[0, 0, 0]">
-      <TresPlaneGeometry :args="[2, 2]" />
-      <TresMeshBasicMaterial :color="0x0000ff" />
-    </TresMesh>
-  </TresScene>
+    <TresLine :points="linePoints">
+      <TresLineDashedMaterial
+        :color="0x000000"
+        :dash-size="0.5"
+        :gap-size="0.2"
+      />
+    </TresLine>
 
-  <TresAxesHelper />
-  <TresGridHelper />
+    <TresAxesHelper :args="[1]" />
+    <TresGridHelper :args="[10, 10]" />
+  </TresScene>
 </template>
