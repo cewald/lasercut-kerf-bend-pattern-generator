@@ -12,7 +12,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full m-0 p-0 overflow-hidden dark:bg-gray-800 *:block *:size-full dark:*:*:invert">
+  <div class="w-full h-full m-0 p-0 overflow-hidden *:block *:size-full dark:*:*:invert">
     <svg
       ref="svgRef"
       xmlns="http://www.w3.org/2000/svg"

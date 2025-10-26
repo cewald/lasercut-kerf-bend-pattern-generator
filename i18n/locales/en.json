@@ -12,7 +12,8 @@
     "baseStroke": "Stroke width",
     "exportButton": "Download SVG",
     "shareButton": "Copy share URL",
-    "githubButton": "View on GitHub"
+    "githubButton": "View on GitHub",
+    "helpButton": "Help & Feedback"
   },
   "toast": {
     "urlCopied": "URL copied to clipboard",
