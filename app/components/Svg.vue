@@ -31,12 +31,12 @@ const exportSvg = () => {
 
 <template>
   <div class="fixed inset-0 w-screen h-screen m-0 p-0 overflow-hidden bg-white">
-    <button
+    <UButton
       @click="exportSvg"
-      class="absolute top-4 right-4 z-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      class="absolute top-4 right-4 z-10"
     >
       Export SVG
-    </button>
+    </UButton>
     <svg
       ref="svgRef"
       class="block w-full h-full"
