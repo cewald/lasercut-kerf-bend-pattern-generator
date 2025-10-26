@@ -24,7 +24,10 @@ const { exportSvg } = useExport()
       label="kerfHeight"
       name="kerfHeight"
     >
-      <UInputNumber v-model="kerfHeight" />
+      <UInputNumber
+        v-model="kerfHeight"
+        :max="height"
+      />
     </UFormField>
 
     <UFormField

@@ -15,6 +15,12 @@ export const useDimensions = () => {
     return availableSpace / dashCount.value
   })
 
+  watch([height], () => {
+    if (kerfHeight.value > height.value) {
+      kerfHeight.value = height.value
+    }
+  })
+
   const numLines = computed(() => {
     const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
     let lines = Math.max(3, calculated)
