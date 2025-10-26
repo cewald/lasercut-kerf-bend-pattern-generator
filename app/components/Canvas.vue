@@ -2,7 +2,7 @@
 import { Pane } from 'tweakpane'
 
 const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
-const { dashThickness, showGrid, enableRotate } = useScene()
+const { dashThickness, showGrid, enableRotate, rotationAltered } = useScene()
 
 const pane = ref<Pane>()
 const paneContainer = useTemplateRef('paneContainer')
@@ -72,10 +72,22 @@ onUnmounted(() => {
 
 <template>
   <div class="relative w-full h-full">
-    <div
-      ref="paneContainer"
-      class="absolute top-4 right-4 z-10"
-    />
+    <div class="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
+      <div ref="paneContainer" />
+      <Transition
+        enter-active-class="transition-opacity duration-200"
+        leave-active-class="transition-opacity duration-200"
+        enter-from-class="opacity-0"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="enableRotate && rotationAltered"
+          class="text-xs text-gray-600 bg-white/90 px-2 py-1 rounded shadow-sm mt-2 inline-block"
+        >
+          Press <UKbd>ESC</UKbd> to reset rotation
+        </div>
+      </Transition>
+    </div>
     <TresCanvas
       clear-color="#ffffff"
       window-size

@@ -13,10 +13,11 @@ export const useScene = () => {
       far: 1000,
     }
   })
+  const dashThickness = useState('dashThickness', () => 0.02)
 
   const showGrid = useState('showGrid', () => true)
-  const enableRotate = useState('enableRotate', () => true)
-  const dashThickness = useState('dashThickness', () => 0.02)
+  const enableRotate = useState('enableRotate', () => false)
+  const rotationAltered = useState('rotationAltered', () => false)
 
   return {
     frustum,
@@ -25,5 +26,6 @@ export const useScene = () => {
     dashThickness,
     showGrid,
     enableRotate,
+    rotationAltered,
   }
 }

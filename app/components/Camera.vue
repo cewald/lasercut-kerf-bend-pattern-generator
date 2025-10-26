@@ -2,28 +2,27 @@
 import { OrbitControls } from '@tresjs/cientos'
 import type { OrthographicCamera } from 'three'
 
-const { enableRotate, frustum } = useScene()
+const { enableRotate, frustum, rotationAltered } = useScene()
 
 const cameraRef = useTemplateRef<OrthographicCamera>('cameraRef')
 const orbitControlsRef = useTemplateRef<InstanceType<typeof OrbitControls>>('orbitControlsRef')
 
 const resetCamera = () => {
   if (cameraRef.value) {
+    rotationAltered.value = false
+
     const camera = toRaw(cameraRef.value)
     camera.position.set(0, 0, 5)
-    camera.zoom = 1
     camera.updateProjectionMatrix()
-  }
-  if (orbitControlsRef.value) {
-    const controls = toRaw((orbitControlsRef.value as any).value || orbitControlsRef.value)
-    if (controls && typeof controls === 'object' && 'target' in controls && 'update' in controls) {
-      controls.target.set(0, 0, 0)
-      controls.update()
-    }
   }
 }
 
-// Reset camera when Escape is pressed
+const handleControlsStart = () => {
+  if (enableRotate.value) {
+    rotationAltered.value = true
+  }
+}
+
 onKeyStroke('Escape', e => {
   e.preventDefault()
   resetCamera()
@@ -50,5 +49,6 @@ defineExpose({ resetCamera })
     :max-polar-angle="Math.PI * 1"
     :min-azimuth-angle="-Math.PI * 0.5"
     :max-azimuth-angle="Math.PI * 0.5"
+    @start="handleControlsStart"
   />
 </template>
