@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { Pane } from 'tweakpane'
 
-const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, showGrid } = useDimensions()
+const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
+const { dashThickness, showGrid, enableRotate } = useScene()
 
 const pane = ref<Pane>()
 const paneContainer = useTemplateRef('paneContainer')
+const sceneRef = useTemplateRef('sceneRef')
 
 onMounted(() => {
   if (!paneContainer.value) return
@@ -53,6 +55,12 @@ onMounted(() => {
   viewFolder.addBinding(showGrid, 'value', {
     label: 'Show Grid',
   })
+  viewFolder.addBinding(enableRotate, 'value', {
+    label: 'Enable Rotate',
+  })
+  viewFolder.addButton({ title: 'Reset Camera' }).on('click', () => {
+    // sceneRef.value?.resetCamera()
+  })
   viewFolder.addBinding(dashThickness, 'value', {
     label: 'dashThickness',
     min: 0.01,
@@ -76,7 +84,7 @@ onUnmounted(() => {
       clear-color="#ffffff"
       window-size
     >
-      <Scene />
+      <Scene ref="sceneRef" />
     </TresCanvas>
   </div>
 </template>

@@ -1,28 +1,6 @@
 <script setup lang="ts">
-const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, showGrid, indentAmount } =
-  useDimensions()
-
-const { width, height } = useWindowSize()
-
-const frustum = computed(() => {
-  const aspect = width.value / height.value
-  const size = 5
-  return {
-    left: (-size * aspect) / 2,
-    right: (size * aspect) / 2,
-    top: size / 2,
-    bottom: -size / 2,
-    near: 0.1,
-    far: 1000,
-  }
-})
-
-const gridSize = computed(() => {
-  // Make grid size responsive to always cover viewport
-  const aspect = width.value / height.value
-  const size = 5
-  return Math.max(size * aspect, size) * 2.5
-})
+const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
+const { dashThickness } = useScene()
 
 const dashedLines = computed(() => {
   const dashes: Array<{ position: [number, number, number]; size: [number, number, number] }> = []
@@ -54,13 +32,9 @@ const dashedLines = computed(() => {
 
 <template>
   <TresScene>
-    <TresOrthographicCamera
-      :position="[0, 0, 5]"
-      :look-at="[0, 0, 0]"
-      v-bind="frustum"
-    />
+    <Camera />
+    <Grid />
 
-    <!-- Render dashed lines as boxes -->
     <TresMesh
       v-for="(dash, index) in dashedLines"
       :key="index"
@@ -69,13 +43,5 @@ const dashedLines = computed(() => {
       <TresBoxGeometry :args="dash.size" />
       <TresMeshBasicMaterial :color="0x000000" />
     </TresMesh>
-
-    <!-- Grid on XY plane (rotated 90 degrees around X axis) -->
-    <TresGridHelper
-      v-if="showGrid"
-      :args="[gridSize, gridSize]"
-      :rotation="[Math.PI / 2, 0, 0]"
-      :position="[0, 0, -0.1]"
-    />
   </TresScene>
 </template>
