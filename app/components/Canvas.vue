@@ -6,7 +6,6 @@ const { dashThickness, showGrid, enableRotate } = useScene()
 
 const pane = ref<Pane>()
 const paneContainer = useTemplateRef('paneContainer')
-const sceneRef = useTemplateRef('sceneRef')
 
 onMounted(() => {
   if (!paneContainer.value) return
@@ -58,9 +57,6 @@ onMounted(() => {
   viewFolder.addBinding(enableRotate, 'value', {
     label: 'Enable Rotate',
   })
-  viewFolder.addButton({ title: 'Reset Camera' }).on('click', () => {
-    // sceneRef.value?.resetCamera()
-  })
   viewFolder.addBinding(dashThickness, 'value', {
     label: 'dashThickness',
     min: 0.01,
@@ -84,7 +80,7 @@ onUnmounted(() => {
       clear-color="#ffffff"
       window-size
     >
-      <Scene ref="sceneRef" />
+      <Scene />
     </TresCanvas>
   </div>
 </template>
