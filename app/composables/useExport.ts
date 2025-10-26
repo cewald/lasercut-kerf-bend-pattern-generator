@@ -21,6 +21,8 @@ export const useExport = () => {
     svg.setAttribute('width', `${width.value + 2 * padding}${unit.value}`)
     svg.setAttribute('height', `${height.value + 2 * padding}${unit.value}`)
 
+    svg.removeAttribute('class')
+
     const serializer = new XMLSerializer()
     const svgString = serializer.serializeToString(svg)
 
