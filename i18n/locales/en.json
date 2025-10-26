@@ -1,7 +1,7 @@
 {
   "editor": {
-    "title": "Lasercut kerf bend pattern generator",
-    "description": "Generate kerf bend patterns for laser cutting easily. Adjust parameters to your needs and export as SVG.",
+    "title": "Lasercut kerf-bend pattern generator",
+    "description": "Generate kerf-bend patterns for laser cutting easily. Adjust parameters to your needs and export as SVG.",
     "unit": "Unit",
     "width": "Width",
     "height": "Height",

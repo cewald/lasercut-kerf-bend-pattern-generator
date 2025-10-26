@@ -15,7 +15,7 @@ useHead({
     lang: head.value.htmlAttrs!.lang,
     dir: head.value.htmlAttrs!.dir as 'ltr',
   },
-  title: 'Kerf Bend Pattern Generator for Laser Cutting',
+  title: 'Kerf-Bend Pattern Generator for Laser Cutting',
   meta: [
     { name: 'description', content: 'A small GUI to generate parameterized lasercut kerf-bend patterns.' },
     { name: 'robots', content: 'index, follow' },

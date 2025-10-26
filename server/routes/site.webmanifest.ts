@@ -1,9 +1,9 @@
-export default defineEventHandler((event) => {
+export default defineEventHandler(event => {
   const config = useRuntimeConfig()
   const baseURL = config.app.baseURL
 
   const manifest = {
-    name: 'Kerf Bend Pattern Generator',
+    name: 'Kerf-Bend Pattern Generator',
     short_name: 'Kerf Pattern',
     description: 'A small GUI to generate parameterized lasercut kerf-bend patterns.',
     icons: [
