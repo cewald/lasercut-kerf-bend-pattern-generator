@@ -3,8 +3,12 @@
 </script>
 
 <template>
-  <Svg></Svg>
-  <div class="fixed top-0 right-0 p-8">
-    <Editor></Editor>
+  <div class="flex h-screen w-screen overflow-hidden">
+    <UDashboardSidebar :default-size="20">
+      <Editor></Editor>
+    </UDashboardSidebar>
+    <div class="flex-1">
+      <Svg></Svg>
+    </div>
   </div>
 </template>

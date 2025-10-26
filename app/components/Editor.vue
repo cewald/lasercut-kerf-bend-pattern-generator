@@ -5,7 +5,7 @@ const { exportSvg } = useExport()
 </script>
 
 <template>
-  <UForm class="space-y-4 bg-white p-4 rounded shadow-lg">
+  <UForm class="space-y-4 p-4">
     <UFormField
       label="unit"
       name="unit"
