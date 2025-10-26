@@ -1,38 +1,63 @@
 export const useDimensions = () => {
-  const gapLength = useState('gapLength', () => 0.3)
-  const numDashes = useState('numDashes', () => 5)
-  const lineSpacing = useState('lineSpacing', () => 0.1)
-  const rectWidth = useState('rectWidth', () => 5)
-  const rectHeight = useState('rectHeight', () => 6)
-  const kerfHeight = useState('kerfHeight', () => 2)
+  const width = useState('width', () => 200)
+  const height = useState('height', () => 200)
+  const kerfHeight = useState('kerfHeight', () => 100)
+  const dashCount = useState('dashCount', () => 3)
+  const gapLength = useState('gapLength', () => 10)
+  const lineSpacing = useState('lineSpacing', () => 10)
+  const unit = useState('unit', () => 'mm')
+
+  const { centerX, centerY } = useViewbox()
 
   const dashLength = computed(() => {
-    const totalGapSpace = (numDashes.value - 1) * gapLength.value
-    const availableSpace = rectWidth.value - totalGapSpace
-    return Math.max(0.1, availableSpace / numDashes.value)
+    const totalGapSpace = (dashCount.value - 1) * gapLength.value
+    const availableSpace = width.value - totalGapSpace
+    return availableSpace / dashCount.value
   })
 
   const numLines = computed(() => {
-    // Use floor to ensure total line height never exceeds kerfHeight
     const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
     let lines = Math.max(3, calculated)
-
-    // Ensure it's odd
     if (lines % 2 === 0) {
-      lines -= 1 // Reduce by 1 to stay within kerfHeight
+      lines -= 1
     }
-
     return lines
   })
 
+  const dashes = computed(() => {
+    const result = []
+    const middleIndex = (numLines.value - 1) / 2
+
+    for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
+      const rowDashCount = lineIndex % 2 === 1 ? dashCount.value - 1 : dashCount.value
+      const y = centerY.value + (middleIndex - lineIndex) * lineSpacing.value
+      const rowDashLength = dashLength.value
+      const rowGapLength = gapLength.value
+      const dashesLength = rowDashCount * rowDashLength
+      const gapsLength = (rowDashCount - 1) * rowGapLength
+      const totalRowLength = dashesLength + gapsLength
+      const startX = centerX.value - totalRowLength / 2
+
+      for (let i = 0; i < rowDashCount; i++) {
+        const x1 = startX + i * (rowDashLength + rowGapLength)
+        const x2 = x1 + rowDashLength
+        result.push({ x1, x2, y })
+      }
+    }
+
+    return result
+  })
+
   return {
-    dashLength,
-    gapLength,
-    numDashes,
-    numLines,
-    lineSpacing,
-    rectWidth,
-    rectHeight,
+    width,
+    height,
     kerfHeight,
+    dashCount,
+    gapLength,
+    lineSpacing,
+    unit,
+    dashes,
+    dashLength,
+    numLines,
   }
 }
