@@ -12,6 +12,7 @@ const kerfHeight = ref(100)
 const dashCount = ref(3)
 const gapLength = ref(10)
 const lineSpacing = ref(10)
+const unit = ref('mm')
 
 const baseStroke = ref(2)
 const markerStroke = computed(() => baseStroke.value / 2)
@@ -69,8 +70,8 @@ const exportSvg = () => {
 
   const exportViewBox = `${rectX - padding} ${rectY - padding} ${width.value + 2 * padding} ${height.value + 2 * padding}`
   svg.setAttribute('viewBox', exportViewBox)
-  svg.setAttribute('width', `${width.value + 2 * padding}`)
-  svg.setAttribute('height', `${height.value + 2 * padding}`)
+  svg.setAttribute('width', `${width.value + 2 * padding}${unit.value}`)
+  svg.setAttribute('height', `${height.value + 2 * padding}${unit.value}`)
 
   const serializer = new XMLSerializer()
   const svgString = serializer.serializeToString(svg)
