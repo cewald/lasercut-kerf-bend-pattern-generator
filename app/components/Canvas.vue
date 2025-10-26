@@ -47,7 +47,7 @@ watch([maxGapLength], () => {
           <UInputNumber
             v-model="rectWidth"
             :min="minRectWidth"
-            :step="0.01"
+            :step="0.5"
           />
         </UFormField>
 
@@ -58,7 +58,7 @@ watch([maxGapLength], () => {
           <UInputNumber
             v-model="rectHeight"
             :min="minRectHeight"
-            :step="0.01"
+            :step="0.5"
           />
         </UFormField>
 

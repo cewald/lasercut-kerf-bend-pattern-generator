@@ -2,8 +2,8 @@ export const useDimensions = () => {
   const gapLength = useState('gapLength', () => 0.3)
   const numDashes = useState('numDashes', () => 5)
   const lineSpacing = useState('lineSpacing', () => 0.1)
-  const rectWidth = useState('rectWidth', () => 10)
-  const rectHeight = useState('rectHeight', () => 5)
+  const rectWidth = useState('rectWidth', () => 5)
+  const rectHeight = useState('rectHeight', () => 6)
   const kerfHeight = useState('kerfHeight', () => 2)
 
   const dashLength = computed(() => {
