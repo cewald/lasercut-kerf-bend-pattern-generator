@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   css: ['~/assets/styles/main.css'],
   i18n: {
     strategy: 'prefix_except_default',
-    baseUrl: import.meta.env.NUXT_APP_BASE_URL || 'http://localhost:3000/',
+    baseUrl: import.meta.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000/',
     defaultLocale: 'en',
     locales: [
       {
