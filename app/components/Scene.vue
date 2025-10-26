@@ -29,15 +29,18 @@ const dashedLines = computed(() => {
   const middleIndex = (numLines.value - 1) / 2
 
   for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
-    const rowIndent = lineIndex % 2 === 1 ? indentAmount.value : 0
     const rowNumDashes = lineIndex % 2 === 1 ? numDashes.value - 1 : numDashes.value
 
     const y = (middleIndex - lineIndex) * lineSpacing.value
-    const totalLength = rowNumDashes * dashLength.value + (rowNumDashes - 1) * gapLength.value
-    const startX = lineIndex % 2 === 1 ? -(totalLength + dashLength.value + gapLength.value) / 2 : -totalLength / 2
+    const dashesLength = rowNumDashes * dashLength.value
+    const gapsLength = (rowNumDashes - 1) * gapLength.value
+    const totalRowLength = dashesLength + gapsLength
+
+    // Center each line independently
+    const startX = -totalRowLength / 2
 
     for (let dashIndex = 0; dashIndex < rowNumDashes; dashIndex++) {
-      const x = startX + dashIndex * (dashLength.value + gapLength.value) + dashLength.value / 2 + rowIndent
+      const x = startX + dashIndex * (dashLength.value + gapLength.value) + dashLength.value / 2
       dashes.push({
         position: [x, y, 0],
         size: [dashLength.value, dashThickness.value, 0.01],
