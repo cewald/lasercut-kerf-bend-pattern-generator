@@ -82,6 +82,7 @@ onUnmounted(() => {
       >
         <div
           v-if="enableRotate && rotationAltered"
+          aria-hidden="true"
           class="text-xs text-gray-600 bg-white px-2 py-1 rounded shadow-sm mt-2 inline-block pointer-events-none select-none"
         >
           Press <UKbd>ESC</UKbd> to reset rotation
