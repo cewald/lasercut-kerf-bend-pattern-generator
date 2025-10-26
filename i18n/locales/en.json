@@ -1,11 +1,19 @@
 {
-  "tweakpane": {
-    "title": "Parameters",
-    "pattern": "Pattern",
-    "view": "View",
-    "showGrid": "Show Grid",
-    "enableRotate": "Enable Rotate",
-    "dashThickness": "Dash Thickness",
-    "resetRotationHint": "Press {key} to reset rotation"
+  "editor": {
+    "unit": "Unit",
+    "width": "Width",
+    "height": "Height",
+    "kerfHeight": "Kerf height",
+    "dashCount": "Dash count",
+    "gapLength": "Gap length",
+    "lineSpacing": "Line spacing",
+    "baseStroke": "Stroke width",
+    "exportButton": "Export SVG",
+    "shareButton": "Copy share URL"
+  },
+  "toast": {
+    "urlCopied": "URL copied to clipboard",
+    "urlCopiedMeta": "You can use this URL to share your design or save it for later.",
+    "urlCopyFailed": "Failed to copy URL"
   }
 }

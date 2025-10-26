@@ -1,17 +1,19 @@
 <script setup lang="ts">
 const { copyUrl } = useUrlSync()
+const { t } = useI18n()
 const toast = useToast()
 
 const handleCopyUrl = async () => {
   const success = await copyUrl()
   if (success) {
     toast.add({
-      title: 'URL copied to clipboard',
+      title: t('toast.urlCopied'),
+      description: t('toast.urlCopiedMeta'),
       color: 'success',
     })
   } else {
     toast.add({
-      title: 'Failed to copy URL',
+      title: t('toast.urlCopyFailed'),
       color: 'error',
     })
   }
@@ -25,6 +27,6 @@ const handleCopyUrl = async () => {
     variant="outline"
     block
   >
-    Copy Share URL
+    {{ t('editor.shareButton') }}
   </UButton>
 </template>

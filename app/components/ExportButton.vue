@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { exportSvg } = useExport()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -8,6 +9,6 @@ const { exportSvg } = useExport()
     color="primary"
     block
   >
-    Export SVG
+    {{ t('editor.exportButton') }}
   </UButton>
 </template>

@@ -2,12 +2,13 @@
 const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
   useDimensions()
 const { baseStroke } = useViewbox()
+const { t } = useI18n()
 </script>
 
 <template>
   <UForm class="space-y-4">
     <UFormField
-      label="unit"
+      :label="t('editor.unit')"
       name="unit"
     >
       <USelect
@@ -18,7 +19,7 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="width"
+      :label="t('editor.width')"
       name="width"
       :hint="unit"
     >
@@ -30,7 +31,7 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="height"
+      :label="t('editor.height')"
       name="height"
       :hint="unit"
     >
@@ -43,7 +44,7 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="kerfHeight"
+      :label="t('editor.kerfHeight')"
       name="kerfHeight"
       :hint="unit"
     >
@@ -57,7 +58,7 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="dashCount"
+      :label="t('editor.dashCount')"
       name="dashCount"
     >
       <UInputNumber
@@ -68,13 +69,13 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="gapLength"
+      :label="t('editor.gapLength')"
       name="gapLength"
       :hint="unit"
     >
       <UInputNumber
         v-model="gapLength"
-        :min="0.1"
+        :min="1"
         :max="maxGapLength"
         :step="1"
         class="w-full"
@@ -82,25 +83,27 @@ const { baseStroke } = useViewbox()
     </UFormField>
 
     <UFormField
-      label="lineSpacing"
+      :label="t('editor.lineSpacing')"
       name="lineSpacing"
       :hint="unit"
     >
       <UInputNumber
         v-model="lineSpacing"
-        :min="0.1"
+        :min="1"
         :step="1"
         class="w-full"
       />
     </UFormField>
 
     <UFormField
-      label="baseStroke"
+      :label="t('editor.baseStroke')"
       name="baseStroke"
     >
       <UInputNumber
         v-model="baseStroke"
         class="w-full"
+        :min="0.1"
+        :step="0.1"
       />
     </UFormField>
 
