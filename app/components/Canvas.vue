@@ -72,7 +72,7 @@ onUnmounted(() => {
 
 <template>
   <div class="relative w-full h-full">
-    <div class="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
+    <div class="absolute top-4 right-4 z-10 flex flex-col items-start gap-2">
       <div ref="paneContainer" />
       <Transition
         enter-active-class="transition-opacity duration-200"
@@ -82,7 +82,7 @@ onUnmounted(() => {
       >
         <div
           v-if="enableRotate && rotationAltered"
-          class="text-xs text-gray-600 bg-white/90 px-2 py-1 rounded shadow-sm mt-2 inline-block"
+          class="text-xs text-gray-600 bg-white/90 px-2 py-1 rounded shadow-sm mt-2 inline-block pointer-events-none select-none"
         >
           Press <UKbd>ESC</UKbd> to reset rotation
         </div>
