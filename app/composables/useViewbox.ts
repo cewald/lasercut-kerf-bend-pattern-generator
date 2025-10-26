@@ -1,15 +1,23 @@
 export const useViewbox = () => {
-  const viewBoxX = useState('viewBoxX', () => 0)
-  const viewBoxY = useState('viewBoxY', () => 0)
-  const viewBoxWidth = useState('viewBoxWidth', () => 1000)
-  const viewBoxHeight = useState('viewBoxHeight', () => 1000)
+  // Access dimension states directly to avoid circular dependency
+  const width = useState<number>('width')
+  const height = useState<number>('height')
 
-  const baseStroke = useState('baseStroke', () => 1.6)
+  const baseStroke = useState('baseStroke', () => 1)
   const markerStroke = computed(() => baseStroke.value / 2)
 
+  // Calculate viewBox with 10% padding on each side
+  const padding = computed(() => Math.max(width.value, height.value) * 0.1)
+
+  const viewBoxWidth = computed(() => width.value + padding.value * 2)
+  const viewBoxHeight = computed(() => height.value + padding.value * 2)
+
+  const viewBoxX = computed(() => -viewBoxWidth.value / 2)
+  const viewBoxY = computed(() => -viewBoxHeight.value / 2)
+
   const viewBox = computed(() => `${viewBoxX.value} ${viewBoxY.value} ${viewBoxWidth.value} ${viewBoxHeight.value}`)
-  const centerX = computed(() => viewBoxX.value + viewBoxWidth.value / 2)
-  const centerY = computed(() => viewBoxY.value + viewBoxHeight.value / 2)
+  const centerX = computed(() => 0)
+  const centerY = computed(() => 0)
 
   return {
     viewBoxX,
