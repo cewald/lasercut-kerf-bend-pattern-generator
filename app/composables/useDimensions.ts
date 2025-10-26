@@ -2,7 +2,7 @@ export const useDimensions = () => {
   const width = useState('width', () => 200)
   const height = useState('height', () => 200)
   const kerfHeight = useState('kerfHeight', () => 100)
-  const dashCount = useState('dashCount', () => 3)
+  const dashCount = useState('dashCount', () => 5)
   const gapLength = useState('gapLength', () => 10)
   const lineSpacing = useState('lineSpacing', () => 10)
   const unit = useState('unit', () => 'mm')
@@ -13,40 +13,6 @@ export const useDimensions = () => {
     const totalGapSpace = (dashCount.value - 1) * gapLength.value
     const availableSpace = width.value - totalGapSpace
     return availableSpace / dashCount.value
-  })
-
-  watch([height], () => {
-    if (kerfHeight.value > height.value) {
-      kerfHeight.value = height.value
-    }
-  })
-
-  watch([dashCount], () => {
-    if (dashCount.value < 2) {
-      dashCount.value = 2
-    }
-  })
-
-  watch([dashLength], () => {
-    if (gapLength.value <= 0) {
-      gapLength.value = 0.1
-    }
-    if (gapLength.value >= dashLength.value) {
-      gapLength.value = Math.max(0.1, dashLength.value - 0.1)
-    }
-  })
-
-  const maxGapLength = computed(() => {
-    return Math.max(0.1, dashLength.value - 0.1)
-  })
-
-  const numLines = computed(() => {
-    const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
-    let lines = Math.max(3, calculated)
-    if (lines % 2 === 0) {
-      lines -= 1
-    }
-    return lines
   })
 
   const dashes = computed(() => {
@@ -73,6 +39,57 @@ export const useDimensions = () => {
     return result
   })
 
+  const minKerfHeight = computed(() => {
+    // Minimum 3 lines requires 2 gaps between them
+    return 2 * lineSpacing.value
+  })
+
+  const maxGapLength = computed(() => {
+    return Math.max(0.1, dashLength.value - 0.1)
+  })
+
+  watch([height], () => {
+    if (kerfHeight.value > height.value) {
+      kerfHeight.value = height.value
+    }
+  })
+
+  watch([kerfHeight], () => {
+    if (height.value < kerfHeight.value) {
+      height.value = kerfHeight.value
+    }
+  })
+
+  watch([dashCount], () => {
+    if (dashCount.value < 2) {
+      dashCount.value = 2
+    }
+  })
+
+  watch([dashLength], () => {
+    if (gapLength.value <= 0) {
+      gapLength.value = 0.1
+    }
+    if (gapLength.value >= dashLength.value) {
+      gapLength.value = Math.max(0.1, dashLength.value - 0.1)
+    }
+  })
+
+  watch([lineSpacing], () => {
+    if (kerfHeight.value < minKerfHeight.value) {
+      kerfHeight.value = minKerfHeight.value
+    }
+  })
+
+  const numLines = computed(() => {
+    const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
+    let lines = Math.max(3, calculated)
+    if (lines % 2 === 0) {
+      lines -= 1
+    }
+    return lines
+  })
+
   return {
     width,
     height,
@@ -85,5 +102,6 @@ export const useDimensions = () => {
     dashLength,
     numLines,
     maxGapLength,
+    minKerfHeight,
   }
 }

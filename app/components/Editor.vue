@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit } = useDimensions()
+const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
+  useDimensions()
 const { baseStroke } = useViewbox()
 const { exportSvg } = useExport()
 </script>
@@ -21,14 +22,21 @@ const { exportSvg } = useExport()
       label="width"
       name="width"
     >
-      <UInputNumber v-model="width" />
+      <UInputNumber
+        v-model="width"
+        :step="10"
+      />
     </UFormField>
 
     <UFormField
       label="height"
       name="height"
     >
-      <UInputNumber v-model="height" />
+      <UInputNumber
+        v-model="height"
+        :min="kerfHeight"
+        :step="10"
+      />
     </UFormField>
 
     <UFormField
@@ -37,7 +45,9 @@ const { exportSvg } = useExport()
     >
       <UInputNumber
         v-model="kerfHeight"
+        :min="minKerfHeight"
         :max="height"
+        :step="10"
       />
     </UFormField>
 
@@ -59,6 +69,7 @@ const { exportSvg } = useExport()
         v-model="gapLength"
         :min="0.1"
         :max="maxGapLength"
+        :step="1"
       />
     </UFormField>
 
@@ -69,7 +80,7 @@ const { exportSvg } = useExport()
       <UInputNumber
         v-model="lineSpacing"
         :min="0.02"
-        :step="0.001"
+        :step="1"
       />
     </UFormField>
 

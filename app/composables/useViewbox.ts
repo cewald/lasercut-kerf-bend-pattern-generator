@@ -4,7 +4,7 @@ export const useViewbox = () => {
   const viewBoxWidth = useState('viewBoxWidth', () => 1000)
   const viewBoxHeight = useState('viewBoxHeight', () => 1000)
 
-  const baseStroke = useState('baseStroke', () => 2)
+  const baseStroke = useState('baseStroke', () => 1.6)
   const markerStroke = computed(() => baseStroke.value / 2)
 
   const viewBox = computed(() => `${viewBoxX.value} ${viewBoxY.value} ${viewBoxWidth.value} ${viewBoxHeight.value}`)
