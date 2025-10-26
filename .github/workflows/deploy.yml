@@ -16,7 +16,7 @@ jobs:
       - name: Install deps
         uses: bahmutov/npm-install@v1
       - name: Build
-        run: npm build:github
+        run: npm run build:github
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
