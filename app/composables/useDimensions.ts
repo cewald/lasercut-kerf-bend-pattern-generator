@@ -1,10 +1,10 @@
 export const useDimensions = () => {
-  const width = useState('width', () => 900)
-  const height = useState('height', () => 600)
-  const kerfHeight = useState('kerfHeight', () => 150)
+  const width = useState('width', () => 110)
+  const height = useState('height', () => 160)
+  const kerfHeight = useState('kerfHeight', () => 80)
   const dashCount = useState('dashCount', () => 5)
-  const gapLength = useState('gapLength', () => 10)
-  const lineSpacing = useState('lineSpacing', () => 10)
+  const gapLength = useState('gapLength', () => 5)
+  const lineSpacing = useState('lineSpacing', () => 5)
   const unit = useState('unit', () => 'mm')
 
   const { centerX, centerY } = useViewbox()
