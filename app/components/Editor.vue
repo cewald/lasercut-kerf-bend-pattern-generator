@@ -2,7 +2,6 @@
 const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
   useDimensions()
 const { baseStroke } = useViewbox()
-const { exportSvg } = useExport()
 </script>
 
 <template>
@@ -105,12 +104,7 @@ const { exportSvg } = useExport()
       />
     </UFormField>
 
-    <UButton
-      @click="exportSvg"
-      color="primary"
-      block
-    >
-      Export SVG
-    </UButton>
+    <ExportButton />
+    <ShareButton />
   </UForm>
 </template>
