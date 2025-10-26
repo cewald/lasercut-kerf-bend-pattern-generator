@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, startY, indentAmount } = useDimensions()
+const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, showGrid, indentAmount } =
+  useDimensions()
 
 const { width, height } = useWindowSize()
 
@@ -16,7 +17,13 @@ const frustum = computed(() => {
   }
 })
 
-// Create dashed line segments as individual meshes
+const gridSize = computed(() => {
+  // Make grid size responsive to always cover viewport
+  const aspect = width.value / height.value
+  const size = 5
+  return Math.max(size * aspect, size) * 2.5
+})
+
 const dashedLines = computed(() => {
   const dashes: Array<{ position: [number, number, number]; size: [number, number, number] }> = []
   const middleIndex = (numLines.value - 1) / 2
@@ -25,7 +32,6 @@ const dashedLines = computed(() => {
     const rowIndent = lineIndex % 2 === 1 ? indentAmount.value : 0
     const rowNumDashes = lineIndex % 2 === 1 ? numDashes.value - 1 : numDashes.value
 
-    // Center around y=0 by offsetting from middle line
     const y = (middleIndex - lineIndex) * lineSpacing.value
     const totalLength = rowNumDashes * dashLength.value + (rowNumDashes - 1) * gapLength.value
     const startX = lineIndex % 2 === 1 ? -(totalLength + dashLength.value + gapLength.value) / 2 : -totalLength / 2
@@ -61,7 +67,12 @@ const dashedLines = computed(() => {
       <TresMeshBasicMaterial :color="0x000000" />
     </TresMesh>
 
-    <TresAxesHelper :args="[3]" />
-    <TresGridHelper :args="[10, 10]" />
+    <!-- Grid on XY plane (rotated 90 degrees around X axis) -->
+    <TresGridHelper
+      v-if="showGrid"
+      :args="[gridSize, gridSize]"
+      :rotation="[Math.PI / 2, 0, 0]"
+      :position="[0, 0, -0.1]"
+    />
   </TresScene>
 </template>

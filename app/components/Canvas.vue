@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { Pane } from 'tweakpane'
 
-const defaultControls = {
-  kerfLength: 20,
-  kerfVerticalDistance: 5,
-  unit: 'mm',
-}
+const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, showGrid } = useDimensions()
 
-const controls = ref(defaultControls)
 const pane = ref<Pane>()
 const paneContainer = useTemplateRef('paneContainer')
 
@@ -16,24 +11,56 @@ onMounted(() => {
 
   // Create Tweakpane instance with container
   pane.value = new Pane({
-    title: 'Controls',
+    title: 'Kerf Bend Parameters',
     container: paneContainer.value,
   })
 
-  // Add position controls
-  const positionFolder = pane.value.addFolder({ title: 'Sizes' })
-  positionFolder.addBinding(controls.value, 'kerfLength', { step: 0.1 })
-  positionFolder.addBinding(controls.value, 'kerfVerticalDistance', { step: 0.1 })
-  positionFolder.addBinding(controls.value, 'unit', {
-    options: {
-      mm: 'mm',
-      cm: 'cm',
-      inch: 'inch',
-    },
+  // Add Pattern controls
+  const patternFolder = pane.value.addFolder({ title: 'Pattern' })
+  patternFolder.addBinding(dashLength, 'value', {
+    label: 'dashLength',
+    min: 0.1,
+    max: 2,
+    step: 0.1,
+  })
+  patternFolder.addBinding(gapLength, 'value', {
+    label: 'gapLength',
+    min: 0.05,
+    max: 1,
+    step: 0.05,
+  })
+  patternFolder.addBinding(numDashes, 'value', {
+    label: 'numDashes',
+    min: 3,
+    max: 10,
+    step: 1,
+  })
+  patternFolder.addBinding(numLines, 'value', {
+    label: 'numLines',
+    min: 2,
+    max: 20,
+    step: 2,
+  })
+  patternFolder.addBinding(lineSpacing, 'value', {
+    label: 'lineSpacing',
+    min: 0.1,
+    max: 2,
+    step: 0.1,
+  })
+
+  // Add View controls
+  const viewFolder = pane.value.addFolder({ title: 'View' })
+  viewFolder.addBinding(showGrid, 'value', {
+    label: 'Show Grid',
+  })
+  viewFolder.addBinding(dashThickness, 'value', {
+    label: 'dashThickness',
+    min: 0.01,
+    max: 0.5,
+    step: 0.01,
   })
 })
 
-// Clean up on unmount
 onUnmounted(() => {
   pane.value?.dispose()
 })
