@@ -1,1 +1,11 @@
-{}
+{
+  "tweakpane": {
+    "title": "Parameters",
+    "pattern": "Pattern",
+    "view": "View",
+    "showGrid": "Show Grid",
+    "enableRotate": "Enable Rotate",
+    "dashThickness": "Dash Thickness",
+    "resetRotationHint": "Press {key} to reset rotation"
+  }
+}

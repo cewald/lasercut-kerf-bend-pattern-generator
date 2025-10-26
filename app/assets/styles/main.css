@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@nuxt/ui';
 
 :root {
   --tp-base-background-color: hsla(230, 5%, 90%, 1);

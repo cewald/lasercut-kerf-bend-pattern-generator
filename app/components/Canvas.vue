@@ -7,17 +7,19 @@ const { dashThickness, showGrid, enableRotate, rotationAltered } = useScene()
 const pane = ref<Pane>()
 const paneContainer = useTemplateRef('paneContainer')
 
+const { t } = useI18n()
+
 onMounted(() => {
   if (!paneContainer.value) return
 
   // Create Tweakpane instance with container
   pane.value = new Pane({
-    title: 'Kerf Bend Parameters',
+    title: t('tweakpane.title'),
     container: paneContainer.value,
   })
 
   // Add Pattern controls
-  const patternFolder = pane.value.addFolder({ title: 'Pattern' })
+  const patternFolder = pane.value.addFolder({ title: t('tweakpane.pattern') })
   patternFolder.addBinding(dashLength, 'value', {
     label: 'dashLength',
     min: 0.1,
@@ -50,15 +52,15 @@ onMounted(() => {
   })
 
   // Add View controls
-  const viewFolder = pane.value.addFolder({ title: 'View', expanded: false })
+  const viewFolder = pane.value.addFolder({ title: t('tweakpane.view'), expanded: false })
   viewFolder.addBinding(showGrid, 'value', {
-    label: 'Show Grid',
+    label: t('tweakpane.showGrid'),
   })
   viewFolder.addBinding(enableRotate, 'value', {
-    label: 'Enable Rotate',
+    label: t('tweakpane.enableRotate'),
   })
   viewFolder.addBinding(dashThickness, 'value', {
-    label: 'dashThickness',
+    label: t('tweakpane.dashThickness'),
     min: 0.005,
     max: 0.02,
     step: 0.001,
@@ -85,7 +87,14 @@ onUnmounted(() => {
           aria-hidden="true"
           class="text-xs text-gray-600 bg-white px-2 py-1 rounded shadow-sm mt-2 inline-block pointer-events-none select-none"
         >
-          Press <UKbd>ESC</UKbd> to reset rotation
+          <I18nT
+            keypath="tweakpane.resetRotationHint"
+            tag="span"
+          >
+            <template v-slot:key>
+              <UKbd>ESC</UKbd>
+            </template>
+          </I18nT>
         </div>
       </Transition>
     </div>
