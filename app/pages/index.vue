@@ -1,6 +1,8 @@
 <template>
   <UDashboardGroup unit="rem">
     <Editor />
-    <Svg />
+    <UDashboardPanel>
+      <Svg />
+    </UDashboardPanel>
   </UDashboardGroup>
 </template>
