@@ -46,7 +46,7 @@ onUnmounted(() => {
       class="absolute top-4 right-4 z-10"
     />
     <TresCanvas
-      clear-color="#82DBC5"
+      clear-color="#ffffff"
       window-size
     >
       <Scene />
