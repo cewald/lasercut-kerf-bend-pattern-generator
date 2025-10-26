@@ -13,7 +13,7 @@ export const useScene = () => {
       far: 1000,
     }
   })
-  const dashThickness = useState('dashThickness', () => 0.02)
+  const dashThickness = useState('dashThickness', () => 0.01)
 
   const showGrid = useState('showGrid', () => true)
   const enableRotate = useState('enableRotate', () => false)

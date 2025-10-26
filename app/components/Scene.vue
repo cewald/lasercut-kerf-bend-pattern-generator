@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import * as THREE from 'three'
-
 const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
 const { dashThickness } = useScene()
 
@@ -42,30 +40,40 @@ const rectangleBounds = computed(() => {
   const topY = middleIndex * lineSpacing.value
   const bottomY = -middleIndex * lineSpacing.value
 
-  const verticalPadding = 4 // 4 units spacing top and bottom
+  const verticalPadding = 1
 
   return {
     width: maxRowLength,
     height: topY - bottomY + verticalPadding * 2,
-    position: [0, 0, -0.01] as [number, number, number], // Slightly behind the dashes
   }
 })
 
-// Create line geometry for rectangle outline
-const rectangleGeometry = computed(() => {
+// Create rectangle outline as thin boxes (same approach as dashed lines)
+const rectangleEdges = computed(() => {
   const { width, height } = rectangleBounds.value
   const halfWidth = width / 2
   const halfHeight = height / 2
+  const thickness = dashThickness.value
+  const z = -0.01 // Slightly behind the dashes
 
-  const points = [
-    new THREE.Vector3(-halfWidth, halfHeight, 0),
-    new THREE.Vector3(halfWidth, halfHeight, 0),
-    new THREE.Vector3(halfWidth, -halfHeight, 0),
-    new THREE.Vector3(-halfWidth, -halfHeight, 0),
-    new THREE.Vector3(-halfWidth, halfHeight, 0), // Close the rectangle
-  ]
-
-  return new THREE.BufferGeometry().setFromPoints(points)
+  return [
+    {
+      position: [0, halfHeight, z],
+      size: [width, thickness, 0.01],
+    },
+    {
+      position: [0, -halfHeight, z],
+      size: [width, thickness, 0.01],
+    },
+    {
+      position: [-halfWidth, 0, z],
+      size: [thickness, height, 0.01],
+    },
+    {
+      position: [halfWidth, 0, z],
+      size: [thickness, height, 0.01],
+    },
+  ] satisfies Array<{ position: [number, number, number]; size: [number, number, number] }>
 })
 </script>
 
@@ -83,11 +91,14 @@ const rectangleGeometry = computed(() => {
       <TresMeshBasicMaterial :color="0x000000" />
     </TresMesh>
 
-    <TresLine
-      :position="rectangleBounds.position"
-      :geometry="rectangleGeometry"
+    <!-- Rectangle outline (using same thickness as dashed lines) -->
+    <TresMesh
+      v-for="(edge, index) in rectangleEdges"
+      :key="`edge-${index}`"
+      :position="edge.position"
     >
-      <TresLineBasicMaterial :color="0x000000" />
-    </TresLine>
+      <TresBoxGeometry :args="edge.size" />
+      <TresMeshBasicMaterial :color="0x000000" />
+    </TresMesh>
   </TresScene>
 </template>
