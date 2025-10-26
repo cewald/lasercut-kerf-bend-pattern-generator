@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight, kerfHeight } = useDimensions()
-const { dashThickness, showGrid, enableRotate, rotationAltered } = useScene()
+const { dashLength, gapLength, numDashes, lineSpacing, rectWidth, rectHeight, kerfHeight } = useDimensions()
+const { dashThicknessBase, showGrid, enableRotate, rotationAltered } = useScene()
 
 const { t } = useI18n()
 
@@ -120,10 +120,10 @@ watch([maxGapLength], () => {
             name="dashThickness"
           >
             <UInputNumber
-              v-model="dashThickness"
+              v-model="dashThicknessBase"
               :step="0.001"
-              :min="0.005"
-              :max="0.03"
+              :min="0.001"
+              :max="0.01"
             />
           </UFormField>
         </div>

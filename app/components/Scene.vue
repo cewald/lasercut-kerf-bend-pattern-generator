@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as THREE from 'three'
+
 const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight, kerfHeight } = useDimensions()
 const { dashThickness } = useScene()
 
@@ -31,7 +33,7 @@ const kerfHeightMarkers = computed(() => {
   const halfHeight = kerfHeight.value / 2
   const width = rectWidth.value
   const thickness = dashThickness.value / 2
-  const z = -0.02
+  const z = -0.001
 
   return [
     {
@@ -51,26 +53,27 @@ const rectangleEdges = computed(() => {
   const halfWidth = width / 2
   const halfHeight = height / 2
   const thickness = dashThickness.value
+  const halfThickness = thickness / 2
   const z = -0.01
 
   return [
     {
-      position: [0, halfHeight, z],
-      size: [width, thickness, 0.01],
+      position: [0, halfHeight, z] as [number, number, number],
+      size: [width + thickness, thickness, 0.01] as [number, number, number],
     },
     {
-      position: [0, -halfHeight, z],
-      size: [width, thickness, 0.01],
+      position: [0, -halfHeight, z] as [number, number, number],
+      size: [width + thickness, thickness, 0.01] as [number, number, number],
     },
     {
-      position: [-halfWidth, 0, z],
-      size: [thickness, height, 0.01],
+      position: [-halfWidth, 0, z] as [number, number, number],
+      size: [thickness, height, 0.01] as [number, number, number],
     },
     {
-      position: [halfWidth, 0, z],
-      size: [thickness, height, 0.01],
+      position: [halfWidth, 0, z] as [number, number, number],
+      size: [thickness, height, 0.01] as [number, number, number],
     },
-  ] satisfies Array<{ position: [number, number, number]; size: [number, number, number] }>
+  ]
 })
 </script>
 
