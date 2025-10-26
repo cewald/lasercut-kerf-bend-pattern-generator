@@ -39,24 +39,33 @@ export const useDimensions = () => {
     return result
   })
 
+  const numLines = computed(() => {
+    const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
+    let lines = Math.max(3, calculated)
+    if (lines % 2 === 0) {
+      lines -= 1
+    }
+    return lines
+  })
+
   const minKerfHeight = computed(() => {
-    return 2 * lineSpacing.value
+    const calculated = 2 * lineSpacing.value
+    return Math.round(calculated * 2) / 2
   })
 
   const maxGapLength = computed(() => {
-    return Math.max(0.1, dashLength.value - 0.1)
+    const calculated = Math.max(0.5, dashLength.value - 0.5)
+    return Math.round(calculated * 2) / 2
   })
 
   watch([height], () => {
     if (kerfHeight.value > height.value) {
-      // Round auto-calculated kerfHeight to nearest 0.5
       kerfHeight.value = Math.round(height.value * 2) / 2
     }
   })
 
   watch([kerfHeight], () => {
     if (height.value < kerfHeight.value) {
-      // Round auto-calculated height to nearest 0.5
       height.value = Math.round(kerfHeight.value * 2) / 2
     }
   })
@@ -81,15 +90,6 @@ export const useDimensions = () => {
     if (kerfHeight.value < minKerfHeight.value) {
       kerfHeight.value = Math.round(minKerfHeight.value * 2) / 2
     }
-  })
-
-  const numLines = computed(() => {
-    const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
-    let lines = Math.max(3, calculated)
-    if (lines % 2 === 0) {
-      lines -= 1
-    }
-    return lines
   })
 
   return {
