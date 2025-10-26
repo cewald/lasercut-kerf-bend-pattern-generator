@@ -68,16 +68,17 @@ export const useDimensions = () => {
 
   watch([dashLength], () => {
     if (gapLength.value <= 0) {
-      gapLength.value = 0.1
+      gapLength.value = 0.5
     }
     if (gapLength.value >= dashLength.value) {
-      gapLength.value = Math.max(0.1, dashLength.value - 0.1)
+      const calculated = Math.max(0.5, dashLength.value - 0.5)
+      gapLength.value = Math.round(calculated * 2) / 2
     }
   })
 
   watch([lineSpacing], () => {
     if (kerfHeight.value < minKerfHeight.value) {
-      kerfHeight.value = minKerfHeight.value
+      kerfHeight.value = Math.round(minKerfHeight.value * 2) / 2
     }
   })
 

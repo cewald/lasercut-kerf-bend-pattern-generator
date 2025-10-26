@@ -79,7 +79,7 @@ const { exportSvg } = useExport()
     >
       <UInputNumber
         v-model="lineSpacing"
-        :min="0.02"
+        :min="0.1"
         :step="1"
       />
     </UFormField>
