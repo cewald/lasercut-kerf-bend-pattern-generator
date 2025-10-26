@@ -1,5 +1,7 @@
 {
   "editor": {
+    "title": "Lasercut kerf bend pattern generator",
+    "description": "Generate kerf bend patterns for laser cutting easily. Adjust parameters to your needs and export as SVG.",
     "unit": "Unit",
     "width": "Width",
     "height": "Height",
@@ -8,8 +10,9 @@
     "gapLength": "Gap length",
     "lineSpacing": "Line spacing",
     "baseStroke": "Stroke width",
-    "exportButton": "Export SVG",
-    "shareButton": "Copy share URL"
+    "exportButton": "Download SVG",
+    "shareButton": "Copy share URL",
+    "githubButton": "View on GitHub"
   },
   "toast": {
     "urlCopied": "URL copied to clipboard",

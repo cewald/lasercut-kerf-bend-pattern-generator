@@ -1,8 +1,6 @@
 <template>
   <div class="flex h-screen w-screen overflow-hidden">
-    <UDashboardSidebar :default-size="20">
-      <Editor></Editor>
-    </UDashboardSidebar>
+    <Editor />
     <div class="flex-1">
       <Svg></Svg>
     </div>

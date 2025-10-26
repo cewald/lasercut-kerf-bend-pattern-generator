@@ -7,6 +7,7 @@ const { t } = useI18n()
   <UButton
     @click="exportSvg"
     color="primary"
+    size="xl"
     block
   >
     {{ t('editor.exportButton') }}
