@@ -40,7 +40,6 @@ export const useDimensions = () => {
   })
 
   const minKerfHeight = computed(() => {
-    // Minimum 3 lines requires 2 gaps between them
     return 2 * lineSpacing.value
   })
 
@@ -50,13 +49,15 @@ export const useDimensions = () => {
 
   watch([height], () => {
     if (kerfHeight.value > height.value) {
-      kerfHeight.value = height.value
+      // Round auto-calculated kerfHeight to nearest 0.5
+      kerfHeight.value = Math.round(height.value * 2) / 2
     }
   })
 
   watch([kerfHeight], () => {
     if (height.value < kerfHeight.value) {
-      height.value = kerfHeight.value
+      // Round auto-calculated height to nearest 0.5
+      height.value = Math.round(kerfHeight.value * 2) / 2
     }
   })
 
