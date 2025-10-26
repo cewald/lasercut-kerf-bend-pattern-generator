@@ -19,12 +19,14 @@ const frustum = computed(() => {
 // Create dashed line segments as individual meshes
 const dashedLines = computed(() => {
   const dashes: Array<{ position: [number, number, number]; size: [number, number, number] }> = []
+  const middleIndex = (numLines.value - 1) / 2
 
   for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
     const rowIndent = lineIndex % 2 === 1 ? indentAmount.value : 0
     const rowNumDashes = lineIndex % 2 === 1 ? numDashes.value - 1 : numDashes.value
 
-    const y = startY.value - lineIndex * lineSpacing.value
+    // Center around y=0 by offsetting from middle line
+    const y = (middleIndex - lineIndex) * lineSpacing.value
     const totalLength = rowNumDashes * dashLength.value + (rowNumDashes - 1) * gapLength.value
     const startX = lineIndex % 2 === 1 ? -(totalLength + dashLength.value + gapLength.value) / 2 : -totalLength / 2
 
