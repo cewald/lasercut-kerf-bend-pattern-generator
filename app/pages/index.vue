@@ -1,8 +1,6 @@
 <template>
-  <div class="flex h-screen w-screen overflow-hidden">
+  <UDashboardGroup unit="rem">
     <Editor />
-    <div class="flex-1">
-      <Svg />
-    </div>
-  </div>
+    <Svg />
+  </UDashboardGroup>
 </template>
