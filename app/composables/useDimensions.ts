@@ -21,6 +21,25 @@ export const useDimensions = () => {
     }
   })
 
+  watch([dashCount], () => {
+    if (dashCount.value < 2) {
+      dashCount.value = 2
+    }
+  })
+
+  watch([dashLength], () => {
+    if (gapLength.value <= 0) {
+      gapLength.value = 0.1
+    }
+    if (gapLength.value >= dashLength.value) {
+      gapLength.value = Math.max(0.1, dashLength.value - 0.1)
+    }
+  })
+
+  const maxGapLength = computed(() => {
+    return Math.max(0.1, dashLength.value - 0.1)
+  })
+
   const numLines = computed(() => {
     const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
     let lines = Math.max(3, calculated)
@@ -65,5 +84,6 @@ export const useDimensions = () => {
     dashes,
     dashLength,
     numLines,
+    maxGapLength,
   }
 }
