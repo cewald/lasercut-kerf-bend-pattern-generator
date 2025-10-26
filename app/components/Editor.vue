@@ -1,11 +1,22 @@
 <script setup lang="ts">
-const { width, height, kerfHeight, dashCount, gapLength, lineSpacing } = useDimensions()
+const { width, height, kerfHeight, dashCount, gapLength, lineSpacing, unit } = useDimensions()
 const { baseStroke } = useViewbox()
 const { exportSvg } = useExport()
 </script>
 
 <template>
   <UForm class="space-y-4 bg-white p-4 rounded shadow-lg">
+    <UFormField
+      label="unit"
+      name="unit"
+    >
+      <USelect
+        v-model="unit"
+        :items="['mm', 'in', 'px']"
+        class="w-full"
+      />
+    </UFormField>
+
     <UFormField
       label="width"
       name="width"

@@ -28,7 +28,7 @@ export const useExport = () => {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = 'kerf-pattern.svg'
+    link.download = 'lasercut-kerf-bend-pattern.svg'
     link.click()
     URL.revokeObjectURL(url)
   }
