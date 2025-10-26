@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
+const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight } = useDimensions()
 const { dashThickness } = useScene()
 
 const dashedLines = computed(() => {
@@ -29,28 +29,10 @@ const dashedLines = computed(() => {
   return dashes
 })
 
-// Calculate rectangle bounds around the lines
-const rectangleBounds = computed(() => {
-  const maxDashes = numDashes.value
-  const dashesLength = maxDashes * dashLength.value
-  const gapsLength = (maxDashes - 1) * gapLength.value
-  const maxRowLength = dashesLength + gapsLength
-
-  const middleIndex = (numLines.value - 1) / 2
-  const topY = middleIndex * lineSpacing.value
-  const bottomY = -middleIndex * lineSpacing.value
-
-  const verticalPadding = 1
-
-  return {
-    width: maxRowLength,
-    height: topY - bottomY + verticalPadding * 2,
-  }
-})
-
 // Create rectangle outline as thin boxes (same approach as dashed lines)
 const rectangleEdges = computed(() => {
-  const { width, height } = rectangleBounds.value
+  const width = rectWidth.value
+  const height = rectHeight.value
   const halfWidth = width / 2
   const halfHeight = height / 2
   const thickness = dashThickness.value

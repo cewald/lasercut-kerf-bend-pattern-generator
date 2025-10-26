@@ -1,81 +1,112 @@
 <script setup lang="ts">
-import { Pane } from 'tweakpane'
-
-const { dashLength, gapLength, numDashes, numLines, lineSpacing } = useDimensions()
+const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight } = useDimensions()
 const { dashThickness, showGrid, enableRotate, rotationAltered } = useScene()
-
-const pane = ref<Pane>()
-const paneContainer = useTemplateRef('paneContainer')
 
 const { t } = useI18n()
 
-onMounted(() => {
-  if (!paneContainer.value) return
-
-  // Create Tweakpane instance with container
-  pane.value = new Pane({
-    title: t('tweakpane.title'),
-    container: paneContainer.value,
-  })
-
-  // Add Pattern controls
-  const patternFolder = pane.value.addFolder({ title: t('tweakpane.pattern') })
-  patternFolder.addBinding(dashLength, 'value', {
-    label: 'dashLength',
-    min: 0.1,
-    max: 2,
-    step: 0.1,
-  })
-  patternFolder.addBinding(gapLength, 'value', {
-    label: 'gapLength',
-    min: 0.05,
-    max: 1,
-    step: 0.05,
-  })
-  patternFolder.addBinding(numDashes, 'value', {
-    label: 'numDashes',
-    min: 3,
-    max: 10,
-    step: 1,
-  })
-  patternFolder.addBinding(numLines, 'value', {
-    label: 'numLines',
-    min: 2,
-    max: 20,
-    step: 2,
-  })
-  patternFolder.addBinding(lineSpacing, 'value', {
-    label: 'lineSpacing',
-    min: 0.1,
-    max: 2,
-    step: 0.1,
-  })
-
-  // Add View controls
-  const viewFolder = pane.value.addFolder({ title: t('tweakpane.view'), expanded: false })
-  viewFolder.addBinding(showGrid, 'value', {
-    label: t('tweakpane.showGrid'),
-  })
-  viewFolder.addBinding(enableRotate, 'value', {
-    label: t('tweakpane.enableRotate'),
-  })
-  viewFolder.addBinding(dashThickness, 'value', {
-    label: t('tweakpane.dashThickness'),
-    min: 0.005,
-    max: 0.02,
-    step: 0.001,
-  })
+const minRectWidth = computed(() => {
+  const minDashLength = 0.1
+  return (numDashes.value - 1) * gapLength.value + numDashes.value * minDashLength
 })
 
-onUnmounted(() => {
-  pane.value?.dispose()
+const maxGapLength = computed(() => {
+  return Math.max(0.05, dashLength.value - 0.01)
+})
+
+watch([minRectWidth], () => {
+  if (rectWidth.value < minRectWidth.value) {
+    rectWidth.value = minRectWidth.value
+  }
+})
+
+watch([maxGapLength], () => {
+  if (gapLength.value >= maxGapLength.value) {
+    gapLength.value = maxGapLength.value
+  }
 })
 </script>
 
 <template>
   <div class="relative w-full h-full">
     <div class="absolute top-4 right-4 z-10 flex flex-col items-start gap-2">
-      <div ref="paneContainer" />
+      <UForm class="space-y-4">
+        <UFormField
+          label="rectWidth"
+          name="rectWidth"
+        >
+          <UInput
+            v-model="rectWidth"
+            type="number"
+            :min="minRectWidth"
+            :step="0.05"
+          />
+        </UFormField>
+
+        <UFormField
+          label="rectHeight"
+          name="rectHeight"
+        >
+          <UInput
+            v-model="rectHeight"
+            type="number"
+          />
+        </UFormField>
+
+        <UFormField
+          label="gapLength"
+          name="gapLength"
+        >
+          <UInput
+            v-model="gapLength"
+            type="number"
+            :min="0.05"
+            :max="maxGapLength"
+            :step="0.05"
+          />
+        </UFormField>
+
+        <UFormField
+          label="numDashes"
+          name="numDashes"
+        >
+          <UInput
+            v-model="numDashes"
+            type="number"
+            :min="2"
+          />
+        </UFormField>
+
+        <UFormField
+          label="numLines"
+          name="numLines"
+        >
+          <UInput
+            v-model="numLines"
+            type="number"
+          />
+        </UFormField>
+
+        <UFormField
+          label="lineSpacing"
+          name="lineSpacing"
+        >
+          <UInput
+            v-model="lineSpacing"
+            type="number"
+          />
+        </UFormField>
+
+        <div class="mt-12 space-y-4">
+          <USwitch
+            label="enableRotate"
+            v-model="enableRotate"
+          />
+          <USwitch
+            label="showGrid"
+            v-model="showGrid"
+          />
+        </div>
+      </UForm>
       <Transition
         enter-active-class="transition-opacity duration-200"
         leave-active-class="transition-opacity duration-200"
