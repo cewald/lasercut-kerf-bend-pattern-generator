@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const { width, height, kerfHeight, dashCount, gapLength, lineSpacing } = useDimensions()
 const { baseStroke } = useViewbox()
+const { exportSvg } = useExport()
 </script>
 
 <template>
-  <UForm class="space-y-4">
+  <UForm class="space-y-4 bg-white p-4 rounded shadow-lg">
     <UFormField
       label="width"
       name="width"
@@ -57,5 +58,14 @@ const { baseStroke } = useViewbox()
     >
       <UInputNumber v-model="baseStroke" />
     </UFormField>
+
+    <UButton
+      @click="exportSvg"
+      color="primary"
+      block
+      class="mt-4"
+    >
+      Export SVG
+    </UButton>
   </UForm>
 </template>
