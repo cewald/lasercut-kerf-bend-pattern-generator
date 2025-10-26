@@ -12,10 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full m-0 p-0 overflow-hidden bg-white">
+  <div class="w-full h-full m-0 p-0 overflow-hidden dark:bg-gray-800 *:block *:size-full dark:*:*:invert">
     <svg
       ref="svgRef"
-      class="block w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
     >

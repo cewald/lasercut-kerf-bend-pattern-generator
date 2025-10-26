@@ -1,7 +1,7 @@
 export const useDimensions = () => {
   const width = useState('width', () => 900)
   const height = useState('height', () => 600)
-  const kerfHeight = useState('kerfHeight', () => 160)
+  const kerfHeight = useState('kerfHeight', () => 150)
   const dashCount = useState('dashCount', () => 5)
   const gapLength = useState('gapLength', () => 10)
   const lineSpacing = useState('lineSpacing', () => 10)
