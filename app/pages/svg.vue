@@ -58,10 +58,41 @@ const dashes = computed(() => {
 
   return result
 })
+
+const exportSvg = () => {
+  if (!svgRef.value) return
+
+  const svg = svgRef.value.cloneNode(true) as SVGSVGElement
+  const padding = 10
+  const rectX = centerX.value - width.value / 2
+  const rectY = centerY.value - height.value / 2
+
+  const exportViewBox = `${rectX - padding} ${rectY - padding} ${width.value + 2 * padding} ${height.value + 2 * padding}`
+  svg.setAttribute('viewBox', exportViewBox)
+  svg.setAttribute('width', `${width.value + 2 * padding}`)
+  svg.setAttribute('height', `${height.value + 2 * padding}`)
+
+  const serializer = new XMLSerializer()
+  const svgString = serializer.serializeToString(svg)
+
+  const blob = new Blob([svgString], { type: 'image/svg+xml' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'kerf-pattern.svg'
+  link.click()
+  URL.revokeObjectURL(url)
+}
 </script>
 
 <template>
   <div class="fixed inset-0 w-screen h-screen m-0 p-0 overflow-hidden bg-white">
+    <button
+      @click="exportSvg"
+      class="absolute top-4 right-4 z-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    >
+      Export SVG
+    </button>
     <svg
       ref="svgRef"
       class="block w-full h-full"
