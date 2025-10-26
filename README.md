@@ -1,9 +1,8 @@
-# Lasercut kerf-bend generator
+# Lasercut kerf-bend pattern generator
 
-Online-Version:
-https://cewald.github.io/lasercut-kerf-bend-generator
+See here: https://cewald.github.io/lasercut-kerf-bend-pattern-generator
 
-Inspired by [Boxes.py](https://boxes.hackerspace-bamberg.de), I needed a way to conistenly genereate those handy kerfe-patterns by specific parameters and download them as SVGs.
+Inspired by [Boxes.py](https://boxes.hackerspace-bamberg.de), I needed a way to conistenly genereate those handy kerfe bend patterns by specific parameters and download them as SVGs.
 
 ## Development
 
