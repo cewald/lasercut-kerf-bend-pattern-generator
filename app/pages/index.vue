@@ -1,91 +1,10 @@
 <script setup lang="ts">
-const svgRef = ref<SVGSVGElement | null>(null)
-
-const viewBoxX = ref(0)
-const viewBoxY = ref(0)
-const viewBoxWidth = ref(1000)
-const viewBoxHeight = ref(1000)
-
-const width = ref(200)
-const height = ref(200)
-const kerfHeight = ref(100)
-const dashCount = ref(3)
-const gapLength = ref(10)
-const lineSpacing = ref(10)
-const unit = ref('mm')
-
-const baseStroke = ref(2)
-const markerStroke = computed(() => baseStroke.value / 2)
-
-const viewBox = computed(() => `${viewBoxX.value} ${viewBoxY.value} ${viewBoxWidth.value} ${viewBoxHeight.value}`)
-const centerX = computed(() => viewBoxX.value + viewBoxWidth.value / 2)
-const centerY = computed(() => viewBoxY.value + viewBoxHeight.value / 2)
-
-const dashLength = computed(() => {
-  const totalGapSpace = (dashCount.value - 1) * gapLength.value
-  const availableSpace = width.value - totalGapSpace
-  return availableSpace / dashCount.value
-})
-
-const numLines = computed(() => {
-  const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
-  let lines = Math.max(3, calculated)
-  if (lines % 2 === 0) {
-    lines -= 1
-  }
-  return lines
-})
-
-const dashes = computed(() => {
-  const result = []
-  const middleIndex = (numLines.value - 1) / 2
-
-  for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
-    const rowDashCount = lineIndex % 2 === 1 ? dashCount.value - 1 : dashCount.value
-    const y = centerY.value + (middleIndex - lineIndex) * lineSpacing.value
-    const rowDashLength = dashLength.value
-    const rowGapLength = gapLength.value
-    const dashesLength = rowDashCount * rowDashLength
-    const gapsLength = (rowDashCount - 1) * rowGapLength
-    const totalRowLength = dashesLength + gapsLength
-    const startX = centerX.value - totalRowLength / 2
-
-    for (let i = 0; i < rowDashCount; i++) {
-      const x1 = startX + i * (rowDashLength + rowGapLength)
-      const x2 = x1 + rowDashLength
-      result.push({ x1, x2, y })
-    }
-  }
-
-  return result
-})
-
-const exportSvg = () => {
-  if (!svgRef.value) return
-
-  const svg = svgRef.value.cloneNode(true) as SVGSVGElement
-  const padding = 10
-  const rectX = centerX.value - width.value / 2
-  const rectY = centerY.value - height.value / 2
-
-  const exportViewBox = `${rectX - padding} ${rectY - padding} ${width.value + 2 * padding} ${height.value + 2 * padding}`
-  svg.setAttribute('viewBox', exportViewBox)
-  svg.setAttribute('width', `${width.value + 2 * padding}${unit.value}`)
-  svg.setAttribute('height', `${height.value + 2 * padding}${unit.value}`)
-
-  const serializer = new XMLSerializer()
-  const svgString = serializer.serializeToString(svg)
-
-  const blob = new Blob([svgString], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'kerf-pattern.svg'
-  link.click()
-  URL.revokeObjectURL(url)
-}
+// ...
 </script>
 
 <template>
   <Svg></Svg>
+  <div class="fixed top-0 right-0 p-8">
+    <Editor></Editor>
+  </div>
 </template>

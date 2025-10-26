@@ -1,140 +1,61 @@
 <script setup lang="ts">
-const svgRef = ref<SVGSVGElement | null>(null)
-
-const viewBoxX = ref(0)
-const viewBoxY = ref(0)
-const viewBoxWidth = ref(1000)
-const viewBoxHeight = ref(1000)
-
-const width = ref(200)
-const height = ref(200)
-const kerfHeight = ref(100)
-const dashCount = ref(3)
-const gapLength = ref(10)
-const lineSpacing = ref(10)
-const unit = ref('mm')
-
-const baseStroke = ref(2)
-const markerStroke = computed(() => baseStroke.value / 2)
-
-const viewBox = computed(() => `${viewBoxX.value} ${viewBoxY.value} ${viewBoxWidth.value} ${viewBoxHeight.value}`)
-const centerX = computed(() => viewBoxX.value + viewBoxWidth.value / 2)
-const centerY = computed(() => viewBoxY.value + viewBoxHeight.value / 2)
-
-const dashLength = computed(() => {
-  const totalGapSpace = (dashCount.value - 1) * gapLength.value
-  const availableSpace = width.value - totalGapSpace
-  return availableSpace / dashCount.value
-})
-
-const numLines = computed(() => {
-  const calculated = Math.floor(kerfHeight.value / lineSpacing.value) + 1
-  let lines = Math.max(3, calculated)
-  if (lines % 2 === 0) {
-    lines -= 1
-  }
-  return lines
-})
-
-const dashes = computed(() => {
-  const result = []
-  const middleIndex = (numLines.value - 1) / 2
-
-  for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
-    const rowDashCount = lineIndex % 2 === 1 ? dashCount.value - 1 : dashCount.value
-    const y = centerY.value + (middleIndex - lineIndex) * lineSpacing.value
-    const rowDashLength = dashLength.value
-    const rowGapLength = gapLength.value
-    const dashesLength = rowDashCount * rowDashLength
-    const gapsLength = (rowDashCount - 1) * rowGapLength
-    const totalRowLength = dashesLength + gapsLength
-    const startX = centerX.value - totalRowLength / 2
-
-    for (let i = 0; i < rowDashCount; i++) {
-      const x1 = startX + i * (rowDashLength + rowGapLength)
-      const x2 = x1 + rowDashLength
-      result.push({ x1, x2, y })
-    }
-  }
-
-  return result
-})
-
-const exportSvg = () => {
-  if (!svgRef.value) return
-
-  const svg = svgRef.value.cloneNode(true) as SVGSVGElement
-  const padding = 10
-  const rectX = centerX.value - width.value / 2
-  const rectY = centerY.value - height.value / 2
-
-  const exportViewBox = `${rectX - padding} ${rectY - padding} ${width.value + 2 * padding} ${height.value + 2 * padding}`
-  svg.setAttribute('viewBox', exportViewBox)
-  svg.setAttribute('width', `${width.value + 2 * padding}${unit.value}`)
-  svg.setAttribute('height', `${height.value + 2 * padding}${unit.value}`)
-
-  const serializer = new XMLSerializer()
-  const svgString = serializer.serializeToString(svg)
-
-  const blob = new Blob([svgString], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'kerf-pattern.svg'
-  link.click()
-  URL.revokeObjectURL(url)
-}
+const { width, height, kerfHeight, dashCount, gapLength, lineSpacing } = useDimensions()
+const { baseStroke } = useViewbox()
 </script>
 
 <template>
-  <div class="fixed inset-0 w-screen h-screen m-0 p-0 overflow-hidden bg-white">
-    <button
-      @click="exportSvg"
-      class="absolute top-4 right-4 z-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+  <UForm class="space-y-4">
+    <UFormField
+      label="width"
+      name="width"
     >
-      Export SVG
-    </button>
-    <svg
-      ref="svgRef"
-      class="block w-full h-full"
-      xmlns="http://www.w3.org/2000/svg"
-      :viewBox="viewBox"
+      <UInputNumber v-model="width" />
+    </UFormField>
+
+    <UFormField
+      label="height"
+      name="height"
     >
-      <rect
-        :x="centerX - width / 2"
-        :y="centerY - height / 2"
-        :width="width"
-        :height="height"
-        fill="none"
-        stroke="black"
-        :stroke-width="baseStroke"
+      <UInputNumber v-model="height" />
+    </UFormField>
+
+    <UFormField
+      label="kerfHeight"
+      name="kerfHeight"
+    >
+      <UInputNumber v-model="kerfHeight" />
+    </UFormField>
+
+    <UFormField
+      label="dashCount"
+      name="dashCount"
+    >
+      <UInputNumber v-model="dashCount" />
+    </UFormField>
+
+    <UFormField
+      label="gapLength"
+      name="gapLength"
+    >
+      <UInputNumber v-model="gapLength" />
+    </UFormField>
+
+    <UFormField
+      label="lineSpacing"
+      name="lineSpacing"
+    >
+      <UInputNumber
+        v-model="lineSpacing"
+        :min="0.02"
+        :step="0.001"
       />
-      <line
-        :x1="centerX - width / 2"
-        :y1="centerY - kerfHeight / 2"
-        :x2="centerX + width / 2"
-        :y2="centerY - kerfHeight / 2"
-        stroke="red"
-        :stroke-width="markerStroke"
-      />
-      <line
-        :x1="centerX - width / 2"
-        :y1="centerY + kerfHeight / 2"
-        :x2="centerX + width / 2"
-        :y2="centerY + kerfHeight / 2"
-        stroke="red"
-        :stroke-width="markerStroke"
-      />
-      <line
-        v-for="(dash, index) in dashes"
-        :key="index"
-        :x1="dash.x1"
-        :y1="dash.y"
-        :x2="dash.x2"
-        :y2="dash.y"
-        stroke="black"
-        :stroke-width="baseStroke"
-      />
-    </svg>
-  </div>
+    </UFormField>
+
+    <UFormField
+      label="baseStroke"
+      name="baseStroke"
+    >
+      <UInputNumber v-model="baseStroke" />
+    </UFormField>
+  </UForm>
 </template>
