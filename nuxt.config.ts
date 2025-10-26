@@ -19,4 +19,9 @@ export default defineNuxtConfig({
     ],
     detectBrowserLanguage: false,
   },
+  nitro: {
+    prerender: {
+      routes: ['/site.webmanifest'],
+    },
+  },
 })

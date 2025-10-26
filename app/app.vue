@@ -7,6 +7,9 @@ const head = useLocaleHead({
   lang: true,
 })
 
+const config = useRuntimeConfig()
+const baseURL = config.app.baseURL
+
 useHead({
   htmlAttrs: {
     lang: head.value.htmlAttrs!.lang,
@@ -20,11 +23,11 @@ useHead({
     ...(head.value.meta || []),
   ],
   link: [
-    { rel: 'shortcut icon', href: '/favicon.ico' },
-    { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },
-    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-    { rel: 'manifest', href: '/site.webmanifest' },
+    { rel: 'shortcut icon', href: `${baseURL}favicon.ico` },
+    { rel: 'icon', type: 'image/png', href: `${baseURL}favicon-96x96.png`, sizes: '96x96' },
+    { rel: 'icon', type: 'image/svg+xml', href: `${baseURL}favicon.svg` },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: `${baseURL}apple-touch-icon.png` },
+    { rel: 'manifest', href: `${baseURL}site.webmanifest` },
     ...(head.value.link || []),
   ],
   bodyAttrs: {
