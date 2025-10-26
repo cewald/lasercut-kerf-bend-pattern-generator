@@ -5,39 +5,57 @@ export const useUrlSync = () => {
   const route = useRoute()
   const router = useRouter()
 
+  const encodeParams = () => {
+    const params = {
+      w: width.value,
+      h: height.value,
+      k: kerfHeight.value,
+      d: dashCount.value,
+      g: gapLength.value,
+      l: lineSpacing.value,
+      u: unit.value,
+      s: baseStroke.value,
+    }
+    const json = JSON.stringify(params)
+    return btoa(json)
+  }
+
+  const decodeParams = (hash: string) => {
+    try {
+      const json = atob(hash)
+      const params = JSON.parse(json)
+      return params
+    } catch {
+      return null
+    }
+  }
+
   onMounted(() => {
-    const params = route.query
+    const configHash = route.query.c
 
-    if (params.width) width.value = Number(params.width)
-    if (params.height) height.value = Number(params.height)
-    if (params.kerfHeight) kerfHeight.value = Number(params.kerfHeight)
-    if (params.dashCount) dashCount.value = Number(params.dashCount)
-    if (params.gapLength) gapLength.value = Number(params.gapLength)
-    if (params.lineSpacing) lineSpacing.value = Number(params.lineSpacing)
-    if (params.unit) unit.value = String(params.unit)
-    if (params.baseStroke) baseStroke.value = Number(params.baseStroke)
+    if (configHash && typeof configHash === 'string') {
+      const params = decodeParams(configHash)
+      if (params) {
+        if (params.w !== undefined) width.value = Number(params.w)
+        if (params.h !== undefined) height.value = Number(params.h)
+        if (params.k !== undefined) kerfHeight.value = Number(params.k)
+        if (params.d !== undefined) dashCount.value = Number(params.d)
+        if (params.g !== undefined) gapLength.value = Number(params.g)
+        if (params.l !== undefined) lineSpacing.value = Number(params.l)
+        if (params.u !== undefined) unit.value = String(params.u)
+        if (params.s !== undefined) baseStroke.value = Number(params.s)
+      }
+
+      router.replace({ query: {} })
+    }
   })
-
-  const updateUrl = useDebounceFn(() => {
-    router.replace({
-      query: {
-        width: width.value.toString(),
-        height: height.value.toString(),
-        kerfHeight: kerfHeight.value.toString(),
-        dashCount: dashCount.value.toString(),
-        gapLength: gapLength.value.toString(),
-        lineSpacing: lineSpacing.value.toString(),
-        unit: unit.value,
-        baseStroke: baseStroke.value.toString(),
-      },
-    })
-  }, 300)
-
-  watch([width, height, kerfHeight, dashCount, gapLength, lineSpacing, unit, baseStroke], updateUrl)
 
   const copyUrl = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href)
+      const hash = encodeParams()
+      const url = new URL(window.location.href)
+      url.searchParams.set('c', hash)
+      await navigator.clipboard.writeText(url.toString())
       return true
     } catch (error) {
       console.error('Failed to copy URL:', error)
