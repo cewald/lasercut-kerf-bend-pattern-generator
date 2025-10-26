@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight } = useDimensions()
+const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight, kerfHeight } = useDimensions()
 const { dashThickness, showGrid, enableRotate, rotationAltered } = useScene()
 
 const { t } = useI18n()
@@ -9,6 +9,10 @@ const minRectWidth = computed(() => {
   return (numDashes.value - 1) * gapLength.value + numDashes.value * minDashLength
 })
 
+const minRectHeight = computed(() => {
+  return kerfHeight.value
+})
+
 const maxGapLength = computed(() => {
   return Math.max(0.05, dashLength.value - 0.01)
 })
@@ -16,6 +20,12 @@ const maxGapLength = computed(() => {
 watch([minRectWidth], () => {
   if (rectWidth.value < minRectWidth.value) {
     rectWidth.value = minRectWidth.value
+  }
+})
+
+watch([minRectHeight], () => {
+  if (rectHeight.value < minRectHeight.value) {
+    rectHeight.value = minRectHeight.value
   }
 })
 
@@ -34,11 +44,10 @@ watch([maxGapLength], () => {
           label="rectWidth"
           name="rectWidth"
         >
-          <UInput
+          <UInputNumber
             v-model="rectWidth"
-            type="number"
             :min="minRectWidth"
-            :step="0.05"
+            :step="0.01"
           />
         </UFormField>
 
@@ -46,22 +55,21 @@ watch([maxGapLength], () => {
           label="rectHeight"
           name="rectHeight"
         >
-          <UInput
+          <UInputNumber
             v-model="rectHeight"
-            type="number"
+            :min="minRectHeight"
+            :step="0.01"
           />
         </UFormField>
 
         <UFormField
-          label="gapLength"
-          name="gapLength"
+          label="kerfHeight"
+          name="kerfHeight"
         >
-          <UInput
-            v-model="gapLength"
-            type="number"
-            :min="0.05"
-            :max="maxGapLength"
-            :step="0.05"
+          <UInputNumber
+            v-model="kerfHeight"
+            :min="0.2"
+            :step="0.1"
           />
         </UFormField>
 
@@ -69,20 +77,21 @@ watch([maxGapLength], () => {
           label="numDashes"
           name="numDashes"
         >
-          <UInput
+          <UInputNumber
             v-model="numDashes"
-            type="number"
             :min="2"
           />
         </UFormField>
 
         <UFormField
-          label="numLines"
-          name="numLines"
+          label="gapLength"
+          name="gapLength"
         >
-          <UInput
-            v-model="numLines"
-            type="number"
+          <UInputNumber
+            v-model="gapLength"
+            :min="0.05"
+            :max="maxGapLength"
+            :step="0.05"
           />
         </UFormField>
 
@@ -90,9 +99,10 @@ watch([maxGapLength], () => {
           label="lineSpacing"
           name="lineSpacing"
         >
-          <UInput
+          <UInputNumber
             v-model="lineSpacing"
-            type="number"
+            :min="0.02"
+            :step="0.001"
           />
         </UFormField>
 
@@ -105,6 +115,17 @@ watch([maxGapLength], () => {
             label="showGrid"
             v-model="showGrid"
           />
+          <UFormField
+            label="dashThickness"
+            name="dashThickness"
+          >
+            <UInputNumber
+              v-model="dashThickness"
+              :step="0.001"
+              :min="0.005"
+              :max="0.03"
+            />
+          </UFormField>
         </div>
       </UForm>
       <Transition

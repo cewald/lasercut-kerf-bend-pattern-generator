@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight } = useDimensions()
+const { dashLength, gapLength, numDashes, numLines, lineSpacing, rectWidth, rectHeight, kerfHeight } = useDimensions()
 const { dashThickness } = useScene()
 
 const dashedLines = computed(() => {
@@ -14,9 +14,7 @@ const dashedLines = computed(() => {
     const gapsLength = (rowNumDashes - 1) * gapLength.value
     const totalRowLength = dashesLength + gapsLength
 
-    // Center each line independently
     const startX = -totalRowLength / 2
-
     for (let dashIndex = 0; dashIndex < rowNumDashes; dashIndex++) {
       const x = startX + dashIndex * (dashLength.value + gapLength.value) + dashLength.value / 2
       dashes.push({
@@ -29,14 +27,31 @@ const dashedLines = computed(() => {
   return dashes
 })
 
-// Create rectangle outline as thin boxes (same approach as dashed lines)
+const kerfHeightMarkers = computed(() => {
+  const halfHeight = kerfHeight.value / 2
+  const width = rectWidth.value
+  const thickness = dashThickness.value / 2
+  const z = -0.02
+
+  return [
+    {
+      position: [0, halfHeight, z] as [number, number, number],
+      size: [width, thickness, 0.01] as [number, number, number],
+    },
+    {
+      position: [0, -halfHeight, z] as [number, number, number],
+      size: [width, thickness, 0.01] as [number, number, number],
+    },
+  ]
+})
+
 const rectangleEdges = computed(() => {
   const width = rectWidth.value
   const height = rectHeight.value
   const halfWidth = width / 2
   const halfHeight = height / 2
   const thickness = dashThickness.value
-  const z = -0.01 // Slightly behind the dashes
+  const z = -0.01
 
   return [
     {
@@ -73,7 +88,6 @@ const rectangleEdges = computed(() => {
       <TresMeshBasicMaterial :color="0x000000" />
     </TresMesh>
 
-    <!-- Rectangle outline (using same thickness as dashed lines) -->
     <TresMesh
       v-for="(edge, index) in rectangleEdges"
       :key="`edge-${index}`"
@@ -81,6 +95,15 @@ const rectangleEdges = computed(() => {
     >
       <TresBoxGeometry :args="edge.size" />
       <TresMeshBasicMaterial :color="0x000000" />
+    </TresMesh>
+
+    <TresMesh
+      v-for="(marker, index) in kerfHeightMarkers"
+      :key="`kerf-marker-${index}`"
+      :position="marker.position"
+    >
+      <TresBoxGeometry :args="marker.size" />
+      <TresMeshBasicMaterial :color="0xff0000" />
     </TresMesh>
   </TresScene>
 </template>
