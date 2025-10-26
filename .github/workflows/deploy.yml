@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - 'nuxt.config.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
 jobs:
   build:
     runs-on: ubuntu-latest
