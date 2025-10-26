@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { dashLength, gapLength, dashThickness, numDashes, numLines, lineSpacing, startY, indentAmount } = useDimensions()
+
 const { width, height } = useWindowSize()
 
 const frustum = computed(() => {
@@ -16,30 +18,21 @@ const frustum = computed(() => {
 
 // Create dashed line segments as individual meshes
 const dashedLines = computed(() => {
-  const dashLength = 0.8 // Length of each dash
-  const gapLength = dashLength / 3 // Gap between dashes
-  const dashThickness = 0.05 // Thickness of the dash
-  const numDashes = 5 // 4 dashes per line
-  const numLines = 5 // 5 lines total
-  const lineSpacing = 0.5 // Vertical spacing between lines
-  const startY = 1.5 // Starting Y position
-  const indentAmount = (dashLength / 3) * 2 // Indent amount for every second line
-
   const dashes: Array<{ position: [number, number, number]; size: [number, number, number] }> = []
 
-  for (let lineIndex = 0; lineIndex < numLines; lineIndex++) {
-    const rowIndent = lineIndex % 2 === 1 ? indentAmount : 0
-    const rowNumDashes = lineIndex % 2 === 1 ? numDashes - 1 : numDashes
+  for (let lineIndex = 0; lineIndex < numLines.value; lineIndex++) {
+    const rowIndent = lineIndex % 2 === 1 ? indentAmount.value : 0
+    const rowNumDashes = lineIndex % 2 === 1 ? numDashes.value - 1 : numDashes.value
 
-    const y = startY - lineIndex * lineSpacing
-    const totalLength = rowNumDashes * dashLength + (rowNumDashes - 1) * gapLength
-    const startX = lineIndex % 2 === 1 ? -(totalLength + dashLength + gapLength) / 2 : -totalLength / 2
+    const y = startY.value - lineIndex * lineSpacing.value
+    const totalLength = rowNumDashes * dashLength.value + (rowNumDashes - 1) * gapLength.value
+    const startX = lineIndex % 2 === 1 ? -(totalLength + dashLength.value + gapLength.value) / 2 : -totalLength / 2
 
     for (let dashIndex = 0; dashIndex < rowNumDashes; dashIndex++) {
-      const x = startX + dashIndex * (dashLength + gapLength) + dashLength / 2 + rowIndent
+      const x = startX + dashIndex * (dashLength.value + gapLength.value) + dashLength.value / 2 + rowIndent
       dashes.push({
         position: [x, y, 0],
-        size: [dashLength, dashThickness, 0.01],
+        size: [dashLength.value, dashThickness.value, 0.01],
       })
     }
   }
