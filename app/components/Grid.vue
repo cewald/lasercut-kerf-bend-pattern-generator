@@ -12,7 +12,7 @@ const gridSize = computed(() => {
 <template>
   <TresGridHelper
     v-if="showGrid"
-    :args="[gridSize, gridSize]"
+    :args="[gridSize, gridSize, undefined, 0xdddddd]"
     :rotation="[Math.PI / 2, 0, 0]"
     :position="[0, 0, 0]"
   />
