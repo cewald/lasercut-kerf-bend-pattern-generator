@@ -12,7 +12,7 @@ export const useDimensions = () => {
   const dashLength = computed(() => {
     const totalGapSpace = (dashCount.value - 1) * gapLength.value
     const availableSpace = width.value - totalGapSpace
-    return availableSpace / dashCount.value
+    return availableSpace / (dashCount.value - 1)
   })
 
   const dashes = computed(() => {
@@ -68,23 +68,29 @@ export const useDimensions = () => {
 
   const minKerfHeight = computed(() => {
     const calculated = 2 * lineSpacing.value
-    return Math.round(calculated * 2) / 2
+    return calculated
   })
 
   const maxGapLength = computed(() => {
     const calculated = Math.max(0.5, dashLength.value - 0.5)
-    return Math.round(calculated * 2) / 2
+    return calculated
+  })
+
+  const minWidth = computed(() => {
+    const minDashLength = 1
+    const calculated = minDashLength * dashCount.value + (dashCount.value - 1) * gapLength.value
+    return calculated
   })
 
   watch([height], () => {
     if (kerfHeight.value > height.value) {
-      kerfHeight.value = Math.round(height.value * 2) / 2
+      kerfHeight.value = height.value
     }
   })
 
   watch([kerfHeight], () => {
     if (height.value < kerfHeight.value) {
-      height.value = Math.round(kerfHeight.value * 2) / 2
+      height.value = kerfHeight.value
     }
   })
 
@@ -100,13 +106,19 @@ export const useDimensions = () => {
     }
     if (gapLength.value >= dashLength.value) {
       const calculated = Math.max(0.5, dashLength.value - 0.5)
-      gapLength.value = Math.round(calculated * 2) / 2
+      gapLength.value = calculated
     }
   })
 
   watch([lineSpacing], () => {
     if (kerfHeight.value < minKerfHeight.value) {
-      kerfHeight.value = Math.round(minKerfHeight.value * 2) / 2
+      kerfHeight.value = minKerfHeight.value
+    }
+  })
+
+  watch([dashCount, gapLength], () => {
+    if (width.value < minWidth.value) {
+      width.value = minWidth.value
     }
   })
 
@@ -123,5 +135,6 @@ export const useDimensions = () => {
     numLines,
     maxGapLength,
     minKerfHeight,
+    minWidth,
   }
 }

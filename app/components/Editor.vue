@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
+const { width, minWidth, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
   useDimensions()
 const { baseStroke } = useViewbox()
 const { t } = useI18n()
@@ -26,6 +26,7 @@ const { t } = useI18n()
         <UInputNumber
           v-model="width"
           variant="soft"
+          :min="minWidth"
           :step="10"
           class="w-full"
         />
