@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const open = ref(false)
 const { width, height, kerfHeight, dashCount, gapLength, maxGapLength, lineSpacing, unit, minKerfHeight } =
   useDimensions()
 const { baseStroke } = useViewbox()
@@ -9,10 +8,9 @@ const { t } = useI18n()
 <template>
   <UDashboardSidebar
     id="default"
-    v-model:open="open"
     collapsible
-    :default-size="26"
     :min-size="26"
+    :default-size="26"
     :collapsed-size="1"
     class="flex flex-col bg-elevated/25"
   >

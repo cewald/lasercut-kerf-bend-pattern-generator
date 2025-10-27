@@ -3,7 +3,7 @@ export const useViewbox = () => {
   const width = useState<number>('width')
   const height = useState<number>('height')
 
-  const baseStroke = useState('baseStroke', () => 1)
+  const baseStroke = useState('baseStroke', () => 0.5)
   const markerStroke = computed(() => baseStroke.value / 2)
 
   // Calculate viewBox with 10% padding on each side
