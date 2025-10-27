@@ -163,7 +163,7 @@ const { t } = useI18n()
           {
             label: t('editor.githubButton'),
             icon: 'i-lucide-github',
-            to: 'https://github.com/cewald/lasercut-kerf-bend-pattern-generator',
+            to: 'https://github.com/cewald/lasercut-kerf-bend-pattern-generator?tab=readme-ov-file',
             target: '_blank',
           },
         ]"
