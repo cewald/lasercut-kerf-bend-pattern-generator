@@ -24,6 +24,7 @@ const { copy, copied } = useClipboard()
         class="w-full"
         readonly
         aria-readonly="true"
+        :aria-label="t('editor.shareButtonHelp')"
       >
         <template
           v-if="shareUrl?.length"
@@ -43,7 +44,10 @@ const { copy, copied } = useClipboard()
         </template>
       </UInput>
     </UFieldGroup>
-    <div class="mt-1 self-center text-sm text-dimmed px-1 hyphens-auto text-pretty leading-tight">
+    <div
+      class="mt-1 self-center text-sm text-dimmed px-1 hyphens-auto text-pretty leading-tight"
+      aria-hidden="true"
+    >
       {{ t('editor.shareButtonHelp') }}
     </div>
   </div>

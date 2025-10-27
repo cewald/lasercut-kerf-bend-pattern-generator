@@ -149,7 +149,10 @@ const { t } = useI18n()
         icon="i-lucide-download"
         class="col-span-2"
       />
-      <ShareButton class="col-span-2 -mt-2" />
+      <LazyShareButton
+        class="col-span-2 -mt-2"
+        :hydrate-on-idle="true"
+      />
     </UForm>
     <div class="mt-auto mb-2 flex">
       <UNavigationMenu
