@@ -14,7 +14,7 @@ const { t } = useI18n()
     :collapsed-size="1"
     class="flex flex-col bg-elevated/25"
   >
-    <h1 class="text-balance text-2xl text-primary leading-tight mt-2">{{ t('editor.title') }}</h1>
+    <h1 class="text-balance text-2xl font-medium text-primary leading-tight mt-2">{{ t('editor.title') }}</h1>
     <p class="hyphens-auto text-pretty">{{ t('editor.description') }}</p>
     <USeparator />
     <UForm class="grid grid-cols-2 gap-4">

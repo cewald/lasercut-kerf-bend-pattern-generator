@@ -2,10 +2,20 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@vueuse/nuxt'],
+  modules: ['@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@vueuse/nuxt', '@nuxt/fonts'],
   css: ['~/assets/styles/main.css'],
   ui: {
     colorMode: false,
+  },
+  fonts: {
+    families: [
+      {
+        name: 'Lato',
+        provider: 'google',
+        weights: ['400', '500'],
+        styles: ['normal'],
+      },
+    ],
   },
   i18n: {
     strategy: 'prefix_except_default',
