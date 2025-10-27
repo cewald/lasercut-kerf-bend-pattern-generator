@@ -141,10 +141,7 @@ const { t } = useI18n()
         icon="i-lucide-download"
         class="col-span-2"
       />
-      <ShareButton
-        class="col-span-2 -mt-2"
-        icon="i-lucide-share"
-      />
+      <ShareButton class="col-span-2 -mt-2" />
     </UForm>
     <div class="mt-auto mb-2 flex">
       <UNavigationMenu

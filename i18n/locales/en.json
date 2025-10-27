@@ -11,13 +11,10 @@
     "lineSpacing": "Line spacing",
     "baseStroke": "Stroke width",
     "exportButton": "Download SVG",
-    "shareButton": "Save / share this layout",
     "githubButton": "View on GitHub",
-    "helpButton": "Help & Feedback"
-  },
-  "toast": {
-    "urlCopied": "URL for this layout copied to clipboard",
-    "urlCopiedMeta": "You can use this URL to share your layout with others or save it for later.",
-    "urlCopyFailed": "Failed to copy URL"
+    "helpButton": "Help & Feedback",
+    "shareButton": "Share",
+    "shareButtonTooltip": "Copy this URL to clipboard",
+    "shareButtonHelp": "You can use this URL to share your layout with others or save it for later."
   }
 }

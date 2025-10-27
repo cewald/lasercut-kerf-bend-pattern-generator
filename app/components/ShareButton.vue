@@ -1,33 +1,48 @@
 <script setup lang="ts">
-const { copyUrl } = useUrlSync()
+const { shareUrl } = useUrlSync()
 const { t } = useI18n()
-const toast = useToast()
-
-const handleCopyUrl = async () => {
-  const success = await copyUrl()
-  if (success) {
-    toast.add({
-      title: t('toast.urlCopied'),
-      description: t('toast.urlCopiedMeta'),
-      color: 'success',
-    })
-  } else {
-    toast.add({
-      title: t('toast.urlCopyFailed'),
-      color: 'error',
-    })
-  }
-}
+const { copy, copied } = useClipboard()
 </script>
 
 <template>
-  <UButton
-    @click="handleCopyUrl"
-    color="neutral"
-    variant="outline"
-    size="xl"
-    block
-  >
-    {{ t('editor.shareButton') }}
-  </UButton>
+  <div>
+    <UFieldGroup
+      class="w-full"
+      @click="copy(shareUrl)"
+    >
+      <UBadge
+        color="neutral"
+        variant="outline"
+        size="lg"
+        trailing-icon="i-lucide-share"
+        class="px-3"
+      />
+      <UInput
+        v-model="shareUrl"
+        :ui="{ trailing: 'pe-0.5', base: 'pe-10' }"
+        size="xl"
+        class="w-full"
+      >
+        <template
+          v-if="shareUrl?.length"
+          #trailing
+        >
+          <UTooltip
+            :text="t('editor.shareButtonTooltip')"
+            :content="{ side: 'right' }"
+          >
+            <UButton
+              :color="copied ? 'success' : 'neutral'"
+              variant="link"
+              :icon="copied ? 'i-lucide-copy-check' : 'i-lucide-copy'"
+              :aria-label="t('editor.shareButton')"
+            />
+          </UTooltip>
+        </template>
+      </UInput>
+    </UFieldGroup>
+    <div class="mt-1 self-center text-sm text-dimmed px-1 hyphens-auto text-pretty leading-tight">
+      {{ t('editor.shareButtonHelp') }}
+    </div>
+  </div>
 </template>

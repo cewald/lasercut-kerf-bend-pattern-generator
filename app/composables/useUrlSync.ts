@@ -5,7 +5,7 @@ export const useUrlSync = () => {
   const route = useRoute()
   const router = useRouter()
 
-  const encodeParams = () => {
+  const paramHash = computed(() => {
     const params = {
       w: width.value,
       h: height.value,
@@ -18,10 +18,19 @@ export const useUrlSync = () => {
     }
     const json = JSON.stringify(params)
     return btoa(json)
-  }
+  })
+
+  const shareUrl = computed(() => {
+    if (!window) return ''
+    const hash = paramHash.value
+    const url = new URL(window?.location?.href)
+    url.searchParams.set('c', hash)
+    return url.toString()
+  })
 
   const decodeParams = (hash: string) => {
     try {
+      if (!hash) return null
       const json = atob(hash)
       const params = JSON.parse(json)
       return params
@@ -50,20 +59,8 @@ export const useUrlSync = () => {
     }
   })
 
-  const copyUrl = async () => {
-    try {
-      const hash = encodeParams()
-      const url = new URL(window.location.href)
-      url.searchParams.set('c', hash)
-      await navigator.clipboard.writeText(url.toString())
-      return true
-    } catch (error) {
-      console.error('Failed to copy URL:', error)
-      return false
-    }
-  }
-
   return {
-    copyUrl,
+    paramHash,
+    shareUrl,
   }
 }
