@@ -28,6 +28,7 @@ const { t } = useI18n()
           variant="soft"
           :min="minWidth"
           :step="10"
+          :stepSnapping="false"
           class="w-full"
         />
       </UFormField>
@@ -42,6 +43,7 @@ const { t } = useI18n()
           variant="soft"
           :min="kerfHeight"
           :step="10"
+          :stepSnapping="false"
           class="w-full"
         />
       </UFormField>
@@ -57,6 +59,7 @@ const { t } = useI18n()
           :min="minKerfHeight"
           :max="height"
           :step="10"
+          :stepSnapping="false"
           class="w-full"
         />
       </UFormField>
@@ -69,6 +72,7 @@ const { t } = useI18n()
           v-model="dashCount"
           variant="soft"
           :min="2"
+          :step="1"
           class="w-full"
         />
       </UFormField>
@@ -84,6 +88,7 @@ const { t } = useI18n()
           :min="1"
           :max="maxGapLength"
           :step="1"
+          :stepSnapping="false"
           class="w-full"
         />
       </UFormField>
@@ -97,7 +102,8 @@ const { t } = useI18n()
           v-model="lineSpacing"
           variant="soft"
           :min="1"
-          :step="1"
+          :step="0.5"
+          :stepSnapping="false"
           class="w-full"
         />
       </UFormField>
