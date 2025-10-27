@@ -15,7 +15,7 @@ const description = 'A small GUI to generate parameterized lasercut kerf-bend pa
 const ogImage = `${absoluteBaseURL.value}og-image.png`
 const ogImageAlt = 'Kerf-Bend Pattern Generator Preview'
 
-const seo = useSeoMeta({
+useSeoMeta({
   title,
   description,
   author: 'Ewald',
