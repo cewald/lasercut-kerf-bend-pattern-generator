@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { locale } = useI18n()
+const { locale, baseUrl: absoluteBaseURL } = useI18n()
 
 const head = useLocaleHead({
   dir: true,
@@ -12,7 +12,7 @@ const baseURL = config.app.baseURL
 
 const title = 'Kerf-Bend Pattern Generator for Laser Cutting'
 const description = 'A small GUI to generate parameterized lasercut kerf-bend patterns.'
-const ogImage = `${baseURL}og-image.png`
+const ogImage = `${absoluteBaseURL}og-image.png`
 const ogImageAlt = 'Kerf-Bend Pattern Generator Preview'
 
 const seo = useSeoMeta({
