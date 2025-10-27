@@ -106,21 +106,25 @@ export const useDimensions = () => {
     }
     if (gapLength.value >= dashLength.value) {
       const calculated = Math.max(0.5, dashLength.value - 0.5)
-      gapLength.value = calculated
+      gapLength.value = roundDimension(calculated)
     }
   })
 
   watch([lineSpacing], () => {
     if (kerfHeight.value < minKerfHeight.value) {
-      kerfHeight.value = minKerfHeight.value
+      kerfHeight.value = roundDimension(minKerfHeight.value)
     }
   })
 
   watch([dashCount, gapLength], () => {
     if (width.value < minWidth.value) {
-      width.value = minWidth.value
+      width.value = roundDimension(minWidth.value)
     }
   })
+
+  const roundDimension = (value: number, step: number = 2) => {
+    return Math.round(value / step) * step
+  }
 
   return {
     width,
