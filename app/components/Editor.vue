@@ -21,7 +21,7 @@ const { t } = useI18n()
           aria-hidden="true"
         />
       </div>
-      <h1 class="text-balance text-2xl font-medium text-primary leading-7 mt-2">{{ t('editor.title') }}</h1>
+      <h1 class="text-balance text-lg font-bold text-primary leading-tight mt-2">{{ t('editor.title') }}</h1>
     </div>
     <p class="hyphens-auto text-pretty">{{ t('editor.description') }}</p>
     <USeparator />
