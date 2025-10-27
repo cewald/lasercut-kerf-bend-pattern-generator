@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@vueuse/nuxt'],
   css: ['~/assets/styles/main.css'],
+  ui: {
+    colorMode: false,
+  },
   i18n: {
     strategy: 'prefix_except_default',
     baseUrl: import.meta.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000/',
