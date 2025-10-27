@@ -24,15 +24,33 @@ export const useDimensions = () => {
       const y = centerY.value + (middleIndex - lineIndex) * lineSpacing.value
       const rowDashLength = dashLength.value
       const rowGapLength = gapLength.value
-      const dashesLength = rowDashCount * rowDashLength
+
+      const isEvenRow = lineIndex % 2 === 0
+
+      let dashesLength
+      if (isEvenRow && rowDashCount > 1) {
+        dashesLength = (rowDashCount - 2) * rowDashLength + 2 * (rowDashLength / 2)
+      } else {
+        dashesLength = rowDashCount * rowDashLength
+      }
+
       const gapsLength = (rowDashCount - 1) * rowGapLength
       const totalRowLength = dashesLength + gapsLength
       const startX = centerX.value - totalRowLength / 2
 
+      let currentX = startX
       for (let i = 0; i < rowDashCount; i++) {
-        const x1 = startX + i * (rowDashLength + rowGapLength)
-        const x2 = x1 + rowDashLength
+        let currentDashLength = rowDashLength
+
+        if (isEvenRow && (i === 0 || i === rowDashCount - 1)) {
+          currentDashLength = rowDashLength / 2
+        }
+
+        const x1 = currentX
+        const x2 = x1 + currentDashLength
         result.push({ x1, x2, y })
+
+        currentX += currentDashLength + rowGapLength
       }
     }
 
