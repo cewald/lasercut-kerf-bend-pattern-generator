@@ -12,7 +12,7 @@ const { t } = useI18n()
     :min-size="26"
     :default-size="26"
     :collapsed-size="1"
-    class="flex flex-col bg-elevated/25"
+    class="flex flex-col"
   >
     <h1 class="text-balance text-2xl font-medium text-primary leading-tight mt-2">{{ t('editor.title') }}</h1>
     <p class="hyphens-auto text-pretty">{{ t('editor.description') }}</p>
@@ -25,6 +25,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="width"
+          variant="soft"
           :step="10"
           class="w-full"
         />
@@ -37,6 +38,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="height"
+          variant="soft"
           :min="kerfHeight"
           :step="10"
           class="w-full"
@@ -50,6 +52,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="kerfHeight"
+          variant="soft"
           :min="minKerfHeight"
           :max="height"
           :step="10"
@@ -63,6 +66,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="dashCount"
+          variant="soft"
           :min="2"
           class="w-full"
         />
@@ -75,6 +79,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="gapLength"
+          variant="soft"
           :min="1"
           :max="maxGapLength"
           :step="1"
@@ -89,6 +94,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="lineSpacing"
+          variant="soft"
           :min="1"
           :step="1"
           class="w-full"
@@ -103,6 +109,7 @@ const { t } = useI18n()
       >
         <USelect
           v-model="unit"
+          variant="soft"
           :items="['mm', 'in', 'px']"
           class="w-full"
         />
@@ -114,6 +121,7 @@ const { t } = useI18n()
       >
         <UInputNumber
           v-model="baseStroke"
+          variant="soft"
           class="w-full"
           :min="0.1"
           :step="0.1"
@@ -127,7 +135,7 @@ const { t } = useI18n()
         class="col-span-2"
       />
       <ShareButton
-        class="col-span-2"
+        class="col-span-2 -mt-2"
         icon="i-lucide-share"
       />
     </UForm>

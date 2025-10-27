@@ -25,7 +25,7 @@ const handleCopyUrl = async () => {
     @click="handleCopyUrl"
     color="neutral"
     variant="outline"
-    size="lg"
+    size="xl"
     block
   >
     {{ t('editor.shareButton') }}
