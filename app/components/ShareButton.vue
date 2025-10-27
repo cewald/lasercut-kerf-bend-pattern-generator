@@ -19,9 +19,11 @@ const { copy, copied } = useClipboard()
       />
       <UInput
         v-model="shareUrl"
-        :ui="{ trailing: 'pe-0.5', base: 'pe-10' }"
+        :ui="{ trailing: 'pe-0.5', base: ['pe-10', copied ? '' : 'text-dimmed'] }"
         size="xl"
         class="w-full"
+        readonly
+        aria-readonly="true"
       >
         <template
           v-if="shareUrl?.length"

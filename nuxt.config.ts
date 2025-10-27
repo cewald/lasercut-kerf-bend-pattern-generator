@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@vueuse/nuxt', '@nuxt/fonts'],
+  modules: ['@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@vueuse/nuxt', '@nuxt/fonts', 'nuxt-svgo'],
   css: ['~/assets/styles/main.css'],
   ui: {
     colorMode: false,
@@ -31,6 +31,10 @@ export default defineNuxtConfig({
       },
     ],
     detectBrowserLanguage: false,
+  },
+  svgo: {
+    autoImportPath: '~/assets/svg',
+    componentPrefix: 'svg',
   },
   nitro: {
     prerender: {

@@ -14,7 +14,15 @@ const { t } = useI18n()
     :collapsed-size="1"
     class="flex flex-col"
   >
-    <h1 class="text-balance text-2xl font-medium text-primary leading-tight mt-2">{{ t('editor.title') }}</h1>
+    <div class="flex items-baseline-last">
+      <div class="">
+        <SvgLogo
+          class="size-14! text-primary -mb-2.5! mr-3 base"
+          aria-hidden="true"
+        />
+      </div>
+      <h1 class="text-balance text-2xl font-medium text-primary leading-7 mt-2">{{ t('editor.title') }}</h1>
+    </div>
     <p class="hyphens-auto text-pretty">{{ t('editor.description') }}</p>
     <USeparator />
     <UForm class="grid grid-cols-2 gap-4">
