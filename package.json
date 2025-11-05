@@ -24,8 +24,8 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@cewald/eslint-config": "^2.3.3",
-    "eslint": "^9.38.0",
+    "@cewald/eslint-config": "^2.3.4",
+    "eslint": "^9.39.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2"
