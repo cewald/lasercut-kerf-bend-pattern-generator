@@ -27,8 +27,8 @@
     "@cewald/eslint-config": "^2.3.4",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
-    "prettier": "^3.6.2"
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4"
   },
   "lint-staged": {
     "*": [
