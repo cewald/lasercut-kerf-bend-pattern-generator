@@ -14,14 +14,14 @@
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.6.1",
-    "@nuxtjs/i18n": "^10.2.4",
+    "@nuxt/ui": "^4.7.0",
+    "@nuxtjs/i18n": "^10.3.0",
     "@vueuse/nuxt": "^14.2.1",
     "nuxt": "^4.4.2",
     "nuxt-svgo": "^4.2.6",
     "typescript": "^6.0.3",
-    "vue": "^3.5.32",
-    "vue-router": "^5.0.4"
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6"
   },
   "devDependencies": {
     "@cewald/eslint-config": "^2.5.11",
